@@ -1,0 +1,8 @@
+backgroud: #E5E5E5
+text: #121113
+black: #333333
+green: #84BD00
+grey: #B7B7B7
+grey2: #767A78
+red: #FF0000
+blue: #5D46E2
