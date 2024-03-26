@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditTextCustomStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittextstyle</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:gravity">start|center_vertical</item>
+    </style>
+
+</resources>
