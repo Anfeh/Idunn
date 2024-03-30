@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Historial"
+        android:id="@+id/historial"
+        android:icon="@drawable/clock"/>
+    <item android:title="Agregar"
+        android:id="@+id/agregar"
+        android:icon="@drawable/add"/>
+    <item android:title="Perfil"
+        android:id="@+id/perfil"
+        android:icon="@drawable/user"/>
+</menu>
