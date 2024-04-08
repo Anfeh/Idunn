@@ -7,16 +7,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import com.example.idunn.databinding.ActivityAgregarBinding;
-import com.example.idunn.databinding.FragmentAgregarBinding;
+import com.example.idunn.databinding.ActivityNavegacionBinding;
 
-public class activity_agregar extends AppCompatActivity {
+public class activity_navegacion extends AppCompatActivity {
 
-    ActivityAgregarBinding binding;
+    ActivityNavegacionBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAgregarBinding.inflate(getLayoutInflater());
+        binding = ActivityNavegacionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         cambiarFragmento(new Agregar());
 
