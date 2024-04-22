@@ -24,10 +24,13 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav"/>
+        android:background="@color/black"
+        app:menu="@menu/bottom_nav"
+        style="@style/CustomBottomNavigationView"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

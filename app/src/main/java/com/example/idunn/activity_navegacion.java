@@ -16,6 +16,7 @@ public class activity_navegacion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityNavegacionBinding.inflate(getLayoutInflater());
+        binding.bottomNavigationView.setSelectedItemId(R.id.agregar);
         setContentView(binding.getRoot());
         cambiarFragmento(new Agregar());
 

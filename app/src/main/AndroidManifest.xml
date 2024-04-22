@@ -22,10 +22,10 @@
             android:name=".activity_registro"
             android:exported="false" />
         <activity
-            android:name=".activity_login"
+            android:name=".activity_navegacion"
             android:exported="false" />
         <activity
-            android:name=".activity_navegacion"
+            android:name=".activity_login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

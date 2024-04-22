@@ -1,234 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Perfil">
+    android:background="@color/background"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Ajusta tu perfil de usuario"
-        android:textSize="26dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
-        />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weightTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Peso"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:textSize="30dp"
-        />
+        android:hint="Peso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView">
 
-    <EditText
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="pesoEjemplo"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Estatura"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:textSize="30dp"/>
-
-    <EditText
-        android:id="@+id/editTextText7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="estaturaEjemplo"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@null"/>
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Medidas"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:textSize="30dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/weightEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Brazo:"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+            android:text="pesoEjemplo"
+            android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/editTextText8"
-            android:layout_width="wrap_content"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/heightTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Estatura"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/heightEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
+            android:text="estaturaEjemplo"
+            android:textSize="24sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/armTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Brazo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heightTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/armEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="25cm"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
+            android:textSize="24sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/legTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pierna:"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+        android:hint="Pierna"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/armTextInputLayout">
 
-        <EditText
-            android:id="@+id/editTextText10"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/legEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
             android:text="25cm"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
+            android:textSize="24sp" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/forearmTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textView91"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Antebrazo:"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+        android:hint="Antebrazo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/legTextInputLayout">
 
-        <EditText
-            android:id="@+id/editTextText101"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/forearmEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
             android:text="25cm"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
+            android:textSize="24sp" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/chestTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textView92"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pecho:"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+        android:hint="Pecho"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forearmTextInputLayout">
 
-        <EditText
-            android:id="@+id/editTextText102"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/chestEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
             android:text="25cm"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+            android:textSize="24sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/calfTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textView923"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Gemelo:"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+        android:hint="Gemelo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chestTextInputLayout">
 
-        <EditText
-            android:id="@+id/editTextText1023"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/calfEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
             android:text="25cm"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+            android:textSize="24sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/waistTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textView924"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cintura:"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+        android:hint="Cintura"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calfTextInputLayout">
 
-        <EditText
-            android:id="@+id/editTextText1024"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/waistEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
             android:text="25cm"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
+            android:textSize="24sp" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:backgroundTint="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waistTextInputLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
