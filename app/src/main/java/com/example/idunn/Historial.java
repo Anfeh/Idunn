@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,25 +74,17 @@ public class Historial extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         datosEntrenamientoArrayList = new ArrayList<>();
 
-
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", "jalon de pecho"));
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", "polea "));
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", "jalon de pecho"));
+        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", Arrays.asList("Text 1", "Text 2", "H", "p","k","l","s","f","w"), Arrays.asList("1","2","3")));
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        Adaptador adaptador = new Adaptador(getActivity(),datosEntrenamientoArrayList);
+        Adaptador adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList);
 
         recyclerView.setAdapter(adaptador);
         adaptador.notifyDataSetChanged();
-
-
-
-
-
-
     }
 }

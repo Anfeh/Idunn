@@ -1,21 +1,36 @@
 package com.example.idunn;
 
-public class DatosEntrenamiento {
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.List;
+
+public class DatosEntrenamiento implements Serializable {
 
 
-    private String tituloEntrenamiento;
-    private String tituloEjercicios;
+    private String nombreRutina;
+    private List<String> nombreEntrenamiento;
+    private List<String> series;
 
-    public DatosEntrenamiento(String tituloEntrenamiento, String tituloEjercicios) {
-        this.tituloEntrenamiento = tituloEntrenamiento;
-        this.tituloEjercicios = tituloEjercicios;
+    public DatosEntrenamiento(String nombreRutina, List<String> nombreEntrenamiento) {
+        this.nombreRutina = nombreRutina;
+        this.nombreEntrenamiento = nombreEntrenamiento;
     }
 
-    public String getTituloEntrenamiento() {
-        return tituloEntrenamiento;
+    public DatosEntrenamiento(String nombreRutina, List<String> nombreEntrenamiento, List<String> series) {
+        this.nombreRutina = nombreRutina;
+        this.nombreEntrenamiento = nombreEntrenamiento;
+        this.series = series;
     }
 
-    public String getTituloEjercicios() {
-        return tituloEjercicios;
+    public String getNombreRutina() {
+        return nombreRutina;
+    }
+
+    public List<String> getNombreEntrenamiento() {
+        return nombreEntrenamiento;
+    }
+
+    public List<String> getSeries() {
+        return series;
     }
 }
