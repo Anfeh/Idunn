@@ -24,6 +24,8 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/green"
         android:text="Agregar entrenamiento"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"
         app:cornerRadius="10dp" />
 
     <ImageView
@@ -41,7 +43,9 @@
         android:text="Tus entrenamientos"
         android:textSize="24dp"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

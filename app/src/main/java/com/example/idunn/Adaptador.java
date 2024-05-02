@@ -41,7 +41,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
         for (String additionalText : datosEntrenamiento.getNombreEntrenamiento()) {
             TextView additionalTextView = new TextView(context);
-            additionalTextView.setText(additionalText);
+            additionalTextView.setText(additionalText + " x " + datosEntrenamiento.getSeries().size() + " series");
             additionalTextView.setTextSize(13);
             additionalTextView.setTextColor(Color.BLACK);
             additionalTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));

@@ -10,7 +10,9 @@
         android:layout_height="match_parent"
         android:layout_weight="0.75"
         android:text="1"
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/inputRepeticiones"
@@ -20,7 +22,9 @@
         android:background="@drawable/edittexstyletrain"
         android:inputType="number"
         android:gravity="center"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/inputPesos"
@@ -31,6 +35,17 @@
         android:inputType="number"
         android:gravity="center"
         android:textColor="@color/black"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"
         />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="kg"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
 </LinearLayout>

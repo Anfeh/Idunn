@@ -8,14 +8,15 @@
     android:background="@color/background"
     tools:context=".Historial">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ultimos entrenamientos"
         android:textSize="26dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -25,15 +26,6 @@
 
         />
 
-    <Button
-        android:id="@+id/button4"
-        android:text="Eliminar"
-        android:textColor="@color/red"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/grey"
-        app:cornerRadius="10dp"/>
+
 
 </LinearLayout>

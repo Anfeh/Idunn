@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
     <item android:title="Historial"
         android:id="@+id/historial"
-        android:icon="@drawable/clock"/>
+        android:icon="@drawable/clock"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"
+        />
     <item android:title="Agregar"
         android:id="@+id/agregar"
-        android:icon="@drawable/add"/>
+        android:icon="@drawable/add"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
     <item android:title="Perfil"
         android:id="@+id/perfil"
-        android:icon="@drawable/user"/>
+        android:icon="@drawable/user"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 </menu>

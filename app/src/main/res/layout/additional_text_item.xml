@@ -11,35 +11,44 @@
         android:text="Ejercicio"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/main_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:id="@+id/Serie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Serie" />
+            android:text="Serie"
+            android:fontFamily="@font/chopin"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/Repeticiones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Repeticiones" />
+            android:text="Repeticiones"
+            android:fontFamily="@font/chopin"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/Pesos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pesos" />
+            android:text="Pesos"
+            android:fontFamily="@font/chopin"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

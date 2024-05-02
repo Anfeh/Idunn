@@ -1,38 +1,40 @@
 package com.example.idunn;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class activity_detailed_train extends AppCompatActivity {
+public class activity_rutina_empezada extends AppCompatActivity {
 
     private TextView tituloEntrenamiento;
+    private Chronometer chronometer;
     private LinearLayout additionalTextContainer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_train);
+        setContentView(R.layout.activity_rutina_empezada);
+        chronometer = findViewById(R.id.cronometro);
+        chronometer = findViewById(R.id.cronometro);
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
 
         tituloEntrenamiento = findViewById(R.id.tituloEntrenamiento);
         additionalTextContainer = findViewById(R.id.additional_text_container);
 
         Intent intent = getIntent();
-        DatosEntrenamiento datosEntrenamiento = (DatosEntrenamiento) intent.getSerializableExtra("clicked_item");
+        DatosEntrenamiento datosEntrenamiento = (DatosEntrenamiento) intent.getSerializableExtra("datosEntrenamiento");
         String[] seriesArray = intent.getStringArrayExtra("series");
         List<String> series = Arrays.asList(seriesArray);
 
@@ -57,31 +59,8 @@ public class activity_detailed_train extends AppCompatActivity {
                 }
             }
         }
-        TextView empezarEntrenamientoTextView = findViewById(R.id.empezarEntrenamiento);
-        empezarEntrenamientoTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onEmpezarEntrenamientoClick(v);
-            }
-        });
+
+
     }
-    public void onEmpezarEntrenamientoClick(View view) {
-        Intent intentToRutinaEmpezada = new Intent(this, activity_rutina_empezada.class);
-
-        Intent intentWithData = getIntent();
-        DatosEntrenamiento datosEntrenamiento = (DatosEntrenamiento) intentWithData.getSerializableExtra("clicked_item");
-        String[] seriesArray = intentWithData.getStringArrayExtra("series");
-
-        intentToRutinaEmpezada.putExtra("datosEntrenamiento", datosEntrenamiento);
-        intentToRutinaEmpezada.putExtra("series", seriesArray);
-
-        startActivity(intentToRutinaEmpezada);
-
-        // Change the text and color of the "Empezar entrenamiento" button
-        TextView empezarEntrenamientoTextView = findViewById(R.id.empezarEntrenamiento);
-        empezarEntrenamientoTextView.setText("Acabar entrenamiento");
-        empezarEntrenamientoTextView.setTextColor(Color.RED);
-    }
-
 
 }

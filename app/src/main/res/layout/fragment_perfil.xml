@@ -23,7 +23,9 @@
         android:layout_centerHorizontal="true"
         android:text="Anfeh"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/chopin"
+        />
 
     <TextView
         android:id="@+id/emailTextView"
@@ -32,7 +34,9 @@
         android:layout_below="@id/nameTextView"
         android:layout_centerHorizontal="true"
         android:text="Anfeh@anfeh.com"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/medidasButton"
@@ -43,7 +47,9 @@
         android:layout_marginTop="50dp"
         android:text="Medidas"
         app:cornerRadius="10dp"
-        android:backgroundTint="@color/green"/>
+        android:backgroundTint="@color/green"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/aboutTextView"
@@ -54,6 +60,8 @@
         android:layout_marginTop="300dp"
         android:text="Sobre mi"
         android:textSize="18sp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -69,6 +77,8 @@
         android:padding="8dp"
         android:text="Log Out"
         android:textColor="@color/red"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
