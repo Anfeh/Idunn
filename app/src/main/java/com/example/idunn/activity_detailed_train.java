@@ -76,11 +76,6 @@ public class activity_detailed_train extends AppCompatActivity {
         intentToRutinaEmpezada.putExtra("series", seriesArray);
 
         startActivity(intentToRutinaEmpezada);
-
-        // Change the text and color of the "Empezar entrenamiento" button
-        TextView empezarEntrenamientoTextView = findViewById(R.id.empezarEntrenamiento);
-        empezarEntrenamientoTextView.setText("Acabar entrenamiento");
-        empezarEntrenamientoTextView.setTextColor(Color.RED);
     }
 
 

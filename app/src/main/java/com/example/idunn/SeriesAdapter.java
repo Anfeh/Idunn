@@ -9,14 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.idunn.Datos.Series;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
 
-    private static List<String> series;
+    private static List<Series> seriesList;
 
-    public SeriesAdapter(List<String> series) {
-        this.series = series;
+    public SeriesAdapter(List<Series> series) {
+        this.seriesList = series;
     }
 
     @NonNull
@@ -28,19 +31,23 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
 
     @Override
     public void onBindViewHolder(@NonNull SeriesViewHolder holder, int position) {
-        String serie = series.get(position);
-        holder.bind(serie);
+        Series seriesItem = seriesList.get(position);
+        holder.bind(seriesItem);
     }
 
     @Override
     public int getItemCount() {
-        return series.size();
+        return seriesList.size();
+    }
+
+    public List<Series> getSeriesList() {
+        return seriesList;
     }
 
     public static class SeriesViewHolder extends RecyclerView.ViewHolder {
-        private TextView numero;
-        private EditText inputRepeticiones;
-        private EditText inputPesos;
+        public TextView numero;
+        public EditText inputRepeticiones;
+        public EditText inputPesos;
 
         public SeriesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,9 +56,12 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
             inputPesos = itemView.findViewById(R.id.inputPesos);
         }
 
-        public void bind(String serie) {
-            // Set the text of the numero TextView to the current series number
-            numero.setText(String.valueOf(series.indexOf(serie) + 1));
+        public void bind(Series seriesItem) {
+            numero.setText(String.valueOf(seriesItem.getSerie()));
+            inputRepeticiones.setText(String.valueOf(seriesItem.getRepetitions()));
+            inputPesos.setText(String.valueOf(seriesItem.getWeight()));
+            Series newSeriesItem = new Series(seriesItem.getSerie(), Integer.parseInt(inputRepeticiones.getText().toString()), Integer.parseInt(inputPesos.getText().toString()));
+            seriesList.set(getAdapterPosition(), newSeriesItem);
         }
     }
 }

@@ -9,10 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.idunn.Datos.User;
+import com.example.idunn.Logica.CurrentUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Perfil extends Fragment {
 
-
+    private FirebaseAuth mAuth;
+    private CurrentUser mCurrentUser;
     public Perfil() {
 
     }
@@ -27,6 +35,21 @@ public class Perfil extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         Button medidasButton = view.findViewById(R.id.medidasButton);
+        mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
+
+        TextView nameTextView = view.findViewById(R.id.nameTextView);
+        TextView emailTextView = view.findViewById(R.id.emailTextView);
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
+            @Override
+            public void onCallback(User user) {
+                if (user != null) {
+                    nameTextView.setText(user.getUsername());
+                    emailTextView.setText(user.getEmail());
+                }
+            }
+        });
         medidasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

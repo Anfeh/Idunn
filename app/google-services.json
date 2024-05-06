@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "313895829807",
+    "firebase_url": "https://workout-6e0ce-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "workout-6e0ce",
+    "storage_bucket": "workout-6e0ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313895829807:android:7cb018b3c5e5214a15e1da",
+        "android_client_info": {
+          "package_name": "com.example.idunn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7MChol-77fB1UFTjxSPjason11ddF4Ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

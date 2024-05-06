@@ -16,6 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.idunn.Datos.Exercises;
+import com.example.idunn.Datos.Series;
+import com.example.idunn.Datos.User;
+import com.example.idunn.Datos.Workout;
+import com.example.idunn.Logica.CurrentUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +31,7 @@ import java.util.List;
 
 
 public class Agregar extends Fragment {
+    private CurrentUser mCurrentUser;
 
     ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList;
 
@@ -51,19 +60,42 @@ public class Agregar extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         datosEntrenamientoArrayList = new ArrayList<>();
+        mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", Arrays.asList("Jalón de pene","Aguacate"), Arrays.asList("1", "2", "3")));
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Espalda", Arrays.asList("Jalon de pecho ", "aguacate", "simon"), Arrays.asList("1", "2", "3")));
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pierna", Arrays.asList("Text 5", "Text 6"), Arrays.asList("1", "2", "3","4")));
+        fetchDataFromDatabase(view,uid);
+    }
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        Adaptador adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList);
+    private void fetchDataFromDatabase(View view, String uid) {
+        mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
+            @Override
+            public void onCallback(User user) {
+                if (user != null) {
+                    List<Workout> workouts = user.getWorkouts();
+                    for (Workout workout : workouts) {
+                        List<String> exerciseNames = new ArrayList<>();
+                        List<Exercises> exercises = workout.getExercises();
+                        List<String> numSeries = null;
+                        for (Exercises exercise : exercises) {
+                            exerciseNames.add(exercise.getName());
+                            List<Series> series = exercise.getSeries();
+                            numSeries = new ArrayList<>();
+                            for (Series serie : series) {
+                                numSeries.add(String.valueOf(serie.getSerie()));
+                            }
+                        }
+                        datosEntrenamientoArrayList.add(new DatosEntrenamiento(workout.getName(), exerciseNames, numSeries));
+                    }
+                    recyclerView = view.findViewById(R.id.recyclerView);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    recyclerView.setHasFixedSize(true);
+                    Adaptador adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList);
 
-        recyclerView.setAdapter(adaptador);
-        adaptador.notifyDataSetChanged();
-
+                    recyclerView.setAdapter(adaptador);
+                    adaptador.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
 
