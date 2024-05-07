@@ -45,6 +45,8 @@ public class activity_rutina_empezada extends AppCompatActivity {
     private RecyclerView recyclerViewSeries;
     private SeriesAdapter adapter;
     private List<RecyclerView> recyclerViewsList = new ArrayList<>();
+    private boolean workoutStored = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,7 @@ public class activity_rutina_empezada extends AppCompatActivity {
                 recyclerViewSeries.setAdapter(adapter);
 
                 for (int i = 0; i < series.size(); i++) {
-                    adapter.addSeries(new Series(i+1, 2, 0));
+                    adapter.addSeries(new Series(i + 1, 2, 0));
                 }
             }
         }
@@ -112,13 +114,30 @@ public class activity_rutina_empezada extends AppCompatActivity {
         acabarEntrenamiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (RecyclerView recyclerView : recyclerViewsList) {
+                List<Exercises> exercisesList = new ArrayList<>();
+                for (int i = 0; i < recyclerViewsList.size(); i++) {
+                    RecyclerView recyclerView = recyclerViewsList.get(i);
+                    String nombreEjercicio = datosEntrenamiento.getNombreEntrenamiento().get(i);
+
                     SeriesAdapter adapter = (SeriesAdapter) recyclerView.getAdapter();
                     List<Series> enteredData = adapter.getEnteredData();
+
+                    // Crear la lista de series solo para el ejercicio actual
+                    List<Series> seriesList = new ArrayList<>();
                     for (Series series : enteredData) {
-                        Log.d("SeriesAdapter", "Series = "+ series.getSerie() +", Repeticiones = " + series.getRepetitions() + ", Peso = " + series.getWeight());
+                        seriesList.add(new Series(series.getSerie(), series.getRepetitions(), series.getWeight()));
                     }
+
+                    // Agregar el ejercicio con su lista de series correspondiente
+                    exercisesList.add(new Exercises(nombreEjercicio, seriesList));
+
+                    Log.d("SeriesAdapter", "Ejercicio: " + nombreEjercicio + ", Series = " + seriesList);
                 }
+
+                // Almacenar los datos de entrenamiento
+                storeWorkout(datosEntrenamiento.getNombreRutina(), "2024-05-07", exercisesList);
+
+                // Finalizar la actividad
                 finish();
             }
         });
@@ -126,17 +145,18 @@ public class activity_rutina_empezada extends AppCompatActivity {
 
 
 
-
-    private void storeWorkout(String workoutName, String date, List<Exercises> exercises) {
+    private void storeWorkout(String workoutName, String date, List<Exercises> exercisesList) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseRef = database.getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("workouts_timeline");
+        DatabaseReference databaseRef = database.getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("workouts_timeline");
 
         Map<String, Object> workoutData = new HashMap<>();
         workoutData.put("workout_name", workoutName);
         workoutData.put("date", date);
 
         List<Map<String, Object>> exercisesData = new ArrayList<>();
-        for (Exercises exercise : exercises) {
+        for (Exercises exercise : exercisesList) {
             Map<String, Object> exerciseData = new HashMap<>();
             exerciseData.put("name", exercise.getName());
 
@@ -153,28 +173,57 @@ public class activity_rutina_empezada extends AppCompatActivity {
         }
         workoutData.put("exercises", exercisesData);
 
+        // Guardar los datos del entrenamiento en Firebase
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long workoutTimelineCount = dataSnapshot.getChildrenCount();
-                String workoutTimelineKey = String.valueOf(workoutTimelineCount);
+                long workoutCount = dataSnapshot.getChildrenCount();
+                String workoutId = String.valueOf(workoutCount);
 
-                databaseRef.child(workoutTimelineKey).setValue(workoutData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("Firebase", "Workout stored successfully");
-                        } else {
-                            Log.e("Firebase", "Error storing workout", task.getException());
-                        }
-                    }
-                });
+                // Agregar el entrenamiento con el ID autoincremental
+                databaseRef.child(workoutId).setValue(workoutData)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("Firebase", "Workout stored successfully");
+                                } else {
+                                    Log.e("Firebase", "Error storing workout", task.getException());
+                                }
+                            }
+                        });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase", "Error getting workout timeline count", databaseError.toException());
+                Log.e("Firebase", "Error getting workout count", databaseError.toException());
             }
         });
+    }
+
+    private List<Exercises> obtenerDatosEjercicios() {
+        List<Exercises> exercisesList = new ArrayList<>();
+
+        // Recorrer cada RecyclerView en additionalTextContainer
+        for (int i = 0; i < additionalTextContainer.getChildCount(); i++) {
+            View childView = additionalTextContainer.getChildAt(i);
+
+            if (childView instanceof RecyclerView) {
+                RecyclerView recyclerView = (RecyclerView) childView;
+                SeriesAdapter adapter = (SeriesAdapter) recyclerView.getAdapter();
+
+
+                // Obtener las series del adaptador del RecyclerView
+                List<Series> seriesList = adapter.getEnteredData();
+
+                // Crear un objeto Exercises con el nombre del ejercicio y las series
+                Exercises exercise = new Exercises("exerciseName", seriesList);
+
+                // Agregar el ejercicio a la lista de ejercicios
+                exercisesList.add(exercise);
+            }
+        }
+
+        return exercisesList;
     }
 }
