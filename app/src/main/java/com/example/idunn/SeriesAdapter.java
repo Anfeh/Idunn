@@ -1,5 +1,7 @@
 package com.example.idunn;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +18,14 @@ import java.util.List;
 
 public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
 
-    private static List<Series> seriesList;
+    private List<Series> seriesList;
+    private Context mContext;
+    private RecyclerView recyclerView;
 
-    public SeriesAdapter(List<Series> series) {
-        this.seriesList = series;
+    public SeriesAdapter(List<Series> seriesList, Context mContext, RecyclerView recyclerView) {
+        this.seriesList = seriesList;
+        this.mContext = mContext;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -31,8 +37,8 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
 
     @Override
     public void onBindViewHolder(@NonNull SeriesViewHolder holder, int position) {
-        Series seriesItem = seriesList.get(position);
-        holder.bind(seriesItem);
+        Series series = seriesList.get(position);
+        holder.bind(series);
     }
 
     @Override
@@ -40,28 +46,43 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         return seriesList.size();
     }
 
-    public List<Series> getSeriesList() {
-        return seriesList;
+    public List<Series> getEnteredData() {
+        List<Series> enteredData = new ArrayList<>();
+        for (int i = 0; i < seriesList.size(); i++) {
+            Series series = seriesList.get(i);
+            SeriesViewHolder holder = (SeriesViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+            if (holder!= null) {
+                series.setSerie(Integer.parseInt(holder.serieTextView.getText().toString()));
+                series.setRepetitions(Integer.parseInt(holder.repetitionsEditText.getText().toString()));
+                series.setWeight(Integer.parseInt(holder.weightEditText.getText().toString()));
+                enteredData.add(series);
+            }
+        }
+        return enteredData;
     }
 
-    public static class SeriesViewHolder extends RecyclerView.ViewHolder {
-        public TextView numero;
-        public EditText inputRepeticiones;
-        public EditText inputPesos;
+    public void addSeries(Series series) {
+        seriesList.add(series);
+        notifyDataSetChanged();
+    }
+
+    public class SeriesViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView serieTextView;
+        private EditText repetitionsEditText;
+        private EditText weightEditText;
 
         public SeriesViewHolder(@NonNull View itemView) {
             super(itemView);
-            numero = itemView.findViewById(R.id.numero);
-            inputRepeticiones = itemView.findViewById(R.id.inputRepeticiones);
-            inputPesos = itemView.findViewById(R.id.inputPesos);
+            serieTextView = itemView.findViewById(R.id.numero);
+            repetitionsEditText = itemView.findViewById(R.id.inputRepeticiones);
+            weightEditText = itemView.findViewById(R.id.inputPesos);
         }
 
-        public void bind(Series seriesItem) {
-            numero.setText(String.valueOf(seriesItem.getSerie()));
-            inputRepeticiones.setText(String.valueOf(seriesItem.getRepetitions()));
-            inputPesos.setText(String.valueOf(seriesItem.getWeight()));
-            Series newSeriesItem = new Series(seriesItem.getSerie(), Integer.parseInt(inputRepeticiones.getText().toString()), Integer.parseInt(inputPesos.getText().toString()));
-            seriesList.set(getAdapterPosition(), newSeriesItem);
+        public void bind(Series series) {
+            serieTextView.setText(String.valueOf(series.getSerie()));
+            repetitionsEditText.setText(String.valueOf(series.getRepetitions()));
+            weightEditText.setText(String.valueOf(series.getWeight()));
         }
     }
 }

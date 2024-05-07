@@ -9,8 +9,16 @@ public class Series {
         this.weight = weight;
     }
     public Series(){}
+    public Series(int serie){
+        this.serie=serie;
+    }
+
     public int getSerie() {
         return serie;
+    }
+
+    public void setSerie(int serie) {
+        this.serie = serie;
     }
 
     public int getRepetitions() {
@@ -19,10 +27,6 @@ public class Series {
 
     public void setRepetitions(int repetitions) {
         this.repetitions = repetitions;
-    }
-
-    public void setSerie(int serie) {
-        this.serie = serie;
     }
 
     public int getWeight() {

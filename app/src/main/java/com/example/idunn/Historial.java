@@ -44,7 +44,7 @@ public class Historial extends Fragment {
 
         datosEntrenamientoArrayList = new ArrayList<>();
 
-        datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", Arrays.asList("Text 1", "Text 2", "H", "p","k","l","s","f","w"), Arrays.asList("1","2","3")));
+       // datosEntrenamientoArrayList.add(new DatosEntrenamiento("Pecho", Arrays.asList("Text 1", "Text 2", "H", "p","k","l","s","f","w"), Arrays.asList("1","2","3")));
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -33,4 +33,16 @@ public class DatosEntrenamiento implements Serializable {
     public List<String> getSeries() {
         return series;
     }
+
+    public void setNombreRutina(String nombreRutina) {
+        this.nombreRutina = nombreRutina;
+    }
+
+    public void setNombreEntrenamiento(List<String> nombreEntrenamiento) {
+        this.nombreEntrenamiento = nombreEntrenamiento;
+    }
+
+    public void setSeries(List<String> series) {
+        this.series = series;
+    }
 }

@@ -49,7 +49,6 @@
                 android:fontFamily="@font/chopin"
                 android:textStyle="bold">
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewSeries"
                     android:layout_width="match_parent"

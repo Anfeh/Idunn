@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,44 +9,53 @@
         android:id="@+id/numero"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.75"
-        android:text="1"
+        android:layout_weight="0.3"
+        android:text=""
         android:textSize="15sp"
         android:fontFamily="@font/chopin"
         android:textStyle="bold"/>
 
-    <EditText
-        android:id="@+id/inputRepeticiones"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:background="@drawable/edittexstyletrain"
-        android:inputType="number"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:fontFamily="@font/chopin"
-        android:textStyle="bold"/>
-
-    <EditText
-        android:id="@+id/inputPesos"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:background="@drawable/edittexstyletrain"
-        android:inputType="number"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:fontFamily="@font/chopin"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="kg"
-        android:fontFamily="@font/chopin"
-        android:textStyle="bold"/>
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/inputRepeticiones"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/edittexstyletrain"
+            android:inputType="number"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:fontFamily="@font/chopin"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/inputPesos"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/edittexstyletrain"
+            android:inputType="number"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:fontFamily="@font/chopin"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="kg"
+            android:fontFamily="@font/chopin"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
 </LinearLayout>
