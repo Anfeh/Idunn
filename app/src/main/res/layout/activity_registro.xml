@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondomitadnegroblanco"
-    tools:context=".activity_registro">
+    tools:context=".Usuario.activity_registro">
 
     <ImageView
         android:id="@+id/logo"

@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Idunn"
         tools:targetApi="31">
         <activity
+            android:name=".activity_ejercicios"
+            android:exported="false" />
+        <activity
+            android:name=".activity_agregar_entrenamiento"
+            android:exported="false" />
+        <activity
             android:name=".activity_rutina_empezada"
             android:exported="false" />
         <activity
@@ -25,19 +31,19 @@
             android:name=".activity_recyclerview_clicked"
             android:exported="false" />
         <activity
-            android:name=".activity_detailed_train"
+            android:name=".Usuario.activity_detailed_train"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_registro"
+            android:name=".Usuario.activity_registro"
             android:exported="false" />
         <activity
             android:name=".activity_navegacion"
             android:exported="false" />
         <activity
-            android:name=".activity_login"
+            android:name=".Usuario.activity_login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

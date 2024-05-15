@@ -26,7 +26,8 @@ public class activity_modificar_medidas extends AppCompatActivity {
     int weightText, heightText, armText, legText, forearmText, chestText, calfText, waistText;
     private Measurement measurement;
     private DatabaseReference measurementsRef;
-    String userId;
+    private String userId;
+    private Button saveButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class activity_modificar_medidas extends AppCompatActivity {
 
         cargarMedidas();
 
-        Button saveButton = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.saveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +77,7 @@ public class activity_modificar_medidas extends AppCompatActivity {
         measurementsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Measurement measurement = dataSnapshot.getValue(Measurement.class);
+                measurement = dataSnapshot.getValue(Measurement.class);
                 if (measurement != null) {
                     weightEditText.setText(String.valueOf(measurement.getWeight()));
                     heightEditText.setText(String.valueOf(measurement.getHeight()));

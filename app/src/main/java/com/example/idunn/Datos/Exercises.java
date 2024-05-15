@@ -11,6 +11,9 @@ public class Exercises {
         this.series = series;
     }
     public Exercises(){}
+    public Exercises(String name){
+        this.name = name;
+    }
 
     public String getName() {
         return name;

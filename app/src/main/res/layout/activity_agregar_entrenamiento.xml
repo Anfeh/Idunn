@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity_agregar_entrenamiento"
+    android:padding="16dp"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre entrenamiento"
+        android:textSize="22dp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:inputType="text"
+        android:background="@drawable/edittexstyletrain"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="20dp"
+        android:hint="Nombre entrenamiento"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Numero de series"
+        android:textSize="22dp"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:inputType="number"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edittexstyletrain"
+        android:paddingLeft="20dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_ejercicios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewAgregarEjercicio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:fontFamily="@font/chopin"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="Agregar ejercicio" />
+
+            <TextView
+                android:id="@+id/textViewAgregarEntrenamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar entrenamiento"
+                android:textSize="30dp"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:fontFamily="@font/chopin"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

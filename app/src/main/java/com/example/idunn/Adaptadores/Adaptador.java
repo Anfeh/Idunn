@@ -1,4 +1,4 @@
-package com.example.idunn;
+package com.example.idunn.Adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.idunn.DatosEntrenamiento;
+import com.example.idunn.R;
+import com.example.idunn.Usuario.activity_detailed_train;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
     Context context;
     ArrayList<DatosEntrenamiento> datosEntrenamientos;
+    View v;
+    DatosEntrenamiento datosEntrenamiento;
+    TextView additionalTextView;
+    Intent intent;
 
     public Adaptador(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientos) {
         this.context = context;
@@ -29,18 +35,18 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
+        v = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DatosEntrenamiento datosEntrenamiento = datosEntrenamientos.get(position);
+        datosEntrenamiento = datosEntrenamientos.get(position);
         holder.tituloEjercicio.setText(datosEntrenamiento.getNombreRutina());
         holder.additionalTextContainer.removeAllViews();
 
         for (String additionalText : datosEntrenamiento.getNombreEntrenamiento()) {
-            TextView additionalTextView = new TextView(context);
+            additionalTextView = new TextView(context);
             additionalTextView.setText(additionalText + " x " + datosEntrenamiento.getSeries().size() + " series");
             additionalTextView.setTextSize(13);
             additionalTextView.setTextColor(Color.BLACK);
@@ -53,7 +59,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, activity_detailed_train.class);
+                intent = new Intent(context, activity_detailed_train.class);
                 intent.putExtra("clicked_item", datosEntrenamiento);
                 intent.putExtra("series", datosEntrenamiento.getSeries().toArray(new String[0]));
                 context.startActivity(intent);
@@ -71,6 +77,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         ArrayList<DatosEntrenamiento> datosEntrenamientos;
         TextView tituloEjercicio;
         LinearLayout additionalTextContainer;
+        DatosEntrenamiento clickedItem;
+        Intent intent;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,8 +92,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         public void onClick(View v) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                DatosEntrenamiento clickedItem = datosEntrenamientos.get(position);
-                Intent intent = new Intent(context, activity_detailed_train.class);
+                clickedItem = datosEntrenamientos.get(position);
+                intent = new Intent(context, activity_detailed_train.class);
                 intent.putExtra("clicked_item", (CharSequence) clickedItem);
                 context.startActivity(intent);
             }

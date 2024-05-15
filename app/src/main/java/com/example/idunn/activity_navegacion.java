@@ -12,6 +12,8 @@ import com.example.idunn.databinding.ActivityNavegacionBinding;
 public class activity_navegacion extends AppCompatActivity {
 
     ActivityNavegacionBinding binding;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +36,8 @@ public class activity_navegacion extends AppCompatActivity {
     }
 
     private void cambiarFragmento(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
     }

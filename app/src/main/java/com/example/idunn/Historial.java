@@ -12,14 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.idunn.Adaptadores.Adaptador;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Historial extends Fragment {
 
     ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList;
     RecyclerView recyclerView;
+    Adaptador adaptador;
 
 
     public Historial() {
@@ -49,7 +51,7 @@ public class Historial extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        Adaptador adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList);
+        adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList);
 
         recyclerView.setAdapter(adaptador);
         adaptador.notifyDataSetChanged();

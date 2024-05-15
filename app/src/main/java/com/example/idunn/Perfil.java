@@ -21,6 +21,11 @@ public class Perfil extends Fragment {
 
     private FirebaseAuth mAuth;
     private CurrentUser mCurrentUser;
+    private View view;
+    private Button medidasButton;
+    private TextView nameTextView, emailTextView;
+    private String uid;
+    private Intent intent;
     public Perfil() {
 
     }
@@ -33,14 +38,14 @@ public class Perfil extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
-        Button medidasButton = view.findViewById(R.id.medidasButton);
+        view = inflater.inflate(R.layout.fragment_perfil, container, false);
+        medidasButton = view.findViewById(R.id.medidasButton);
         mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
 
-        TextView nameTextView = view.findViewById(R.id.nameTextView);
-        TextView emailTextView = view.findViewById(R.id.emailTextView);
+        nameTextView = view.findViewById(R.id.nameTextView);
+        emailTextView = view.findViewById(R.id.emailTextView);
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
             @Override
             public void onCallback(User user) {
@@ -53,7 +58,7 @@ public class Perfil extends Fragment {
         medidasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), activity_modificar_medidas.class);
+                intent = new Intent(getActivity(), activity_modificar_medidas.class);
                 startActivity(intent);
             }
         });
