@@ -41,18 +41,16 @@ public class activity_registro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-
-        // Referencia para usar FirebaseAuth y FirebaseDatabase para almacenar el valor del usuario
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
-        // Referenciamos a los elementos del xml.
-        registerButton = findViewById(R.id.buttonRegister);
-        loginTextView = findViewById(R.id.loginTextView);
+        // Inicializamos todos los métodos
+        initViews();
+        setListeners();
 
 
 
+
+    }
+
+    private void setListeners(){
         // Si le damos a login nos mueve al activity_login
         loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +68,17 @@ public class activity_registro extends AppCompatActivity {
                 registerUser();
             }
         });
+    }
 
+
+    private void initViews(){
+        // Referencia para usar FirebaseAuth y FirebaseDatabase para almacenar el valor del usuario
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        // Referenciamos a los elementos del xml.
+        registerButton = findViewById(R.id.buttonRegister);
+        loginTextView = findViewById(R.id.loginTextView);
     }
     private void registerUser() {
 
@@ -89,23 +97,30 @@ public class activity_registro extends AppCompatActivity {
         /* Validacion usando los patterns, si esta poniendo algo mal se vuelve el borde rojo por el contrario verde. */
         if (!ValidacionUsuario.isValidUsername(username)) {
             usernameEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
+            if(username.length() <=5 || username.length() >=17){
+                Toast.makeText(activity_registro.this, "Introduzca al menos 6 caracteres y máximo 16 porfavor...", Toast.LENGTH_SHORT).show();
+            }
             return ;
         }
         usernameEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));
+
         if (!ValidacionUsuario.isValidEmail(email)) {
             emailEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
+            Toast.makeText(activity_registro.this, "Introduzca bien el email...", Toast.LENGTH_SHORT).show();
             return;
         }
         emailEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));
 
         if (!ValidacionUsuario.isValidPassword(password)) {
             passwordEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
+            Toast.makeText(activity_registro.this, "Mínimo 1 mayuscula, letra y caracter especial...", Toast.LENGTH_SHORT).show();
             return;
         }
 
         usernameEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));
         if (!password.equals(confirmPassword)) {
             confirmPasswordEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
+            Toast.makeText(activity_registro.this, "Introduzca la misma contraseña...", Toast.LENGTH_SHORT).show();
             return;
         }
         confirmPasswordEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));

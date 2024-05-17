@@ -8,6 +8,17 @@
     android:outlineProvider="none"
     android:outlineSpotShadowColor="#000000">
 
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/textFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:text="Fecha"
+        android:textColor="@color/black"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/tarjeta"
         android:layout_width="360dp"
@@ -15,6 +26,7 @@
         android:layout_gravity="center"
         android:backgroundTint="@color/background"
         android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="#000000"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true">
@@ -23,6 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:outlineAmbientShadowColor="#000000"
+            android:outlineSpotShadowColor="#000000"
             android:weightSum="5.5">
 
             <TextView

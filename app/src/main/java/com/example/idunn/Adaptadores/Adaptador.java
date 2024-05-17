@@ -22,10 +22,6 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
     Context context;
     ArrayList<DatosEntrenamiento> datosEntrenamientos;
-    View v;
-    DatosEntrenamiento datosEntrenamiento;
-    TextView additionalTextView;
-    Intent intent;
 
     public Adaptador(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientos) {
         this.context = context;
@@ -35,18 +31,18 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        v = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        datosEntrenamiento = datosEntrenamientos.get(position);
+        DatosEntrenamiento datosEntrenamiento = datosEntrenamientos.get(position);
         holder.tituloEjercicio.setText(datosEntrenamiento.getNombreRutina());
         holder.additionalTextContainer.removeAllViews();
 
         for (String additionalText : datosEntrenamiento.getNombreEntrenamiento()) {
-            additionalTextView = new TextView(context);
+            TextView additionalTextView = new TextView(context);
             additionalTextView.setText(additionalText + " x " + datosEntrenamiento.getSeries().size() + " series");
             additionalTextView.setTextSize(13);
             additionalTextView.setTextColor(Color.BLACK);
@@ -59,12 +55,12 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(context, activity_detailed_train.class);
+                Intent intent = new Intent(context, activity_detailed_train.class);
                 intent.putExtra("clicked_item", datosEntrenamiento);
                 intent.putExtra("series", datosEntrenamiento.getSeries().toArray(new String[0]));
                 context.startActivity(intent);
             }
-        });;
+        });
     }
 
     @Override
@@ -72,31 +68,14 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         return datosEntrenamientos.size();
     }
 
-    public static class MyViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements View.OnClickListener {
-        Context context;
-        ArrayList<DatosEntrenamiento> datosEntrenamientos;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tituloEjercicio;
         LinearLayout additionalTextContainer;
-        DatosEntrenamiento clickedItem;
-        Intent intent;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tituloEjercicio = itemView.findViewById(R.id.tituloTarjeta);
             additionalTextContainer = itemView.findViewById(R.id.additional_text_container);
-
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                clickedItem = datosEntrenamientos.get(position);
-                intent = new Intent(context, activity_detailed_train.class);
-                intent.putExtra("clicked_item", (CharSequence) clickedItem);
-                context.startActivity(intent);
-            }
         }
     }
 }

@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logoidunn"
+        android:label="Idunn"
+        android:exported="true"
+        android:roundIcon="@drawable/logoidunn"
         android:supportsRtl="true"
         android:theme="@style/Theme.Idunn"
-        tools:targetApi="31">
+        tools:targetApi="34">
         <activity
-            android:name=".activity_ejercicios"
+            android:name=".Usuario.activity_ejercicios"
             android:exported="false" />
         <activity
-            android:name=".activity_agregar_entrenamiento"
+            android:name=".Usuario.activity_agregar_entrenamiento"
             android:exported="false" />
         <activity
             android:name=".activity_rutina_empezada"
             android:exported="false" />
+
         <activity
-            android:name=".activity_empezarRutina"
-            android:exported="false" />
-        <activity
-            android:name=".activity_modificar_medidas"
-            android:exported="false" />
-        <activity
-            android:name=".activity_recyclerview_clicked"
+            android:name=".Usuario.activity_modificar_medidas"
             android:exported="false" />
         <activity
             android:name=".Usuario.activity_detailed_train"

@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idunn.R;
-import com.example.idunn.activity_ejercicios;
+import com.example.idunn.Usuario.activity_ejercicios;
 
 import java.util.List;
 

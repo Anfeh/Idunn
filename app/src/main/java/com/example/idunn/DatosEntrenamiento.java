@@ -8,15 +8,19 @@ public class DatosEntrenamiento implements Serializable {
 
 
     private String nombreRutina;
+    private String fecha;
     private List<String> nombreEntrenamiento;
     private List<String> series;
 
-    public DatosEntrenamiento(String nombreRutina, List<String> nombreEntrenamiento) {
-        this.nombreRutina = nombreRutina;
-        this.nombreEntrenamiento = nombreEntrenamiento;
-    }
+
 
     public DatosEntrenamiento(String nombreRutina, List<String> nombreEntrenamiento, List<String> series) {
+        this.nombreRutina = nombreRutina;
+        this.nombreEntrenamiento = nombreEntrenamiento;
+        this.series = series;
+    }
+    public DatosEntrenamiento(String fecha,String nombreRutina, List<String> nombreEntrenamiento, List<String> series) {
+        this.fecha=fecha;
         this.nombreRutina = nombreRutina;
         this.nombreEntrenamiento = nombreEntrenamiento;
         this.series = series;
@@ -44,5 +48,13 @@ public class DatosEntrenamiento implements Serializable {
 
     public void setSeries(List<String> series) {
         this.series = series;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

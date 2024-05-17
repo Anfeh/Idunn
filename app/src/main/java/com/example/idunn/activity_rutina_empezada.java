@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.idunn.Adaptadores.SeriesAdapter;
 import com.example.idunn.Datos.Exercises;
@@ -27,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,13 +49,15 @@ public class activity_rutina_empezada extends AppCompatActivity {
     private List<String> series;
     private View exerciseTitleView;
     private List<Exercises> exercisesList;
-    private String nombreEjercicio, workoutId;
+    private String nombreEjercicio, workoutId, fechaActual;
     private List<Series> enteredData, seriesList;
     private FirebaseDatabase database;
     private DatabaseReference databaseRef;
     private Map<String, Object> workoutData, exerciseData, seriesItemData;
     private List<Map<String, Object>> exercisesData, seriesData;
     private long workoutCount;
+    private Chronometer chronometer;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,9 @@ public class activity_rutina_empezada extends AppCompatActivity {
         additionalTextContainer = findViewById(R.id.additional_text_container);
         acabarEntrenamiento = findViewById(R.id.acabarEntrenamiento);
         recyclerViewSeries = findViewById(R.id.recyclerViewSeries);
+        chronometer = findViewById(R.id.cronometro);
+        chronometer.setFormat("%s");
+        chronometer.start();
     }
 
     private void setupRecyclerView() {
@@ -82,7 +90,6 @@ public class activity_rutina_empezada extends AppCompatActivity {
         datosEntrenamiento = (DatosEntrenamiento) intent.getSerializableExtra("datosEntrenamiento");
         seriesArray = intent.getStringArrayExtra("series");
         series = Arrays.asList(seriesArray);
-        Log.d("SeriesAdapter", "Elemento: Repeticiones = " + series);
 
         if (datosEntrenamiento != null) {
             tituloEntrenamiento.setText(datosEntrenamiento.getNombreRutina());
@@ -128,21 +135,18 @@ public class activity_rutina_empezada extends AppCompatActivity {
 
                     adapter = (SeriesAdapter) recyclerView.getAdapter();
                     enteredData = adapter.getEnteredData();
-
-                    // Crear la lista de series solo para el ejercicio actual
                     seriesList = new ArrayList<>();
                     for (Series series : enteredData) {
                         seriesList.add(new Series(series.getSerie(), series.getRepetitions(), series.getWeight()));
                     }
 
-                    // Agregar el ejercicio con su lista de series correspondiente
                     exercisesList.add(new Exercises(nombreEjercicio, seriesList));
+                    //Toast.makeText(activity_rutina_empezada.this, "Rellene todos los campos...", Toast.LENGTH_SHORT).show();
 
-                    Log.d("SeriesAdapter", "Ejercicio: " + nombreEjercicio + ", Series = " + seriesList);
                 }
 
-                // Almacenar los datos de entrenamiento
-                storeWorkout(datosEntrenamiento.getNombreRutina(), "2024-05-07", exercisesList);
+
+                storeWorkout(datosEntrenamiento.getNombreRutina(), getFechaActual(), chronometer.getText().toString(), exercisesList);
 
                 // Finalizar la actividad
                 finish();
@@ -150,8 +154,11 @@ public class activity_rutina_empezada extends AppCompatActivity {
         });
     }
 
-
-    private void storeWorkout(String workoutName, String date, List<Exercises> exercisesList) {
+    private String getFechaActual(){
+        calendar = Calendar.getInstance();
+        return fechaActual = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+    }
+    private void storeWorkout(String workoutName, String date, String tiempo, List<Exercises> exercisesList) {
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -160,6 +167,7 @@ public class activity_rutina_empezada extends AppCompatActivity {
         workoutData = new HashMap<>();
         workoutData.put("workout_name", workoutName);
         workoutData.put("date", date);
+        workoutData.put("time", tiempo);
         exercisesData = new ArrayList<>();
 
         for (Exercises exercise : exercisesList) {
@@ -168,7 +176,7 @@ public class activity_rutina_empezada extends AppCompatActivity {
 
             seriesData = new ArrayList<>();
             for (Series series : exercise.getSeries()) {
-               seriesItemData = new HashMap<>();
+                seriesItemData = new HashMap<>();
                 seriesItemData.put("serie", series.getSerie());
                 seriesItemData.put("repetitions", series.getRepetitions());
                 seriesItemData.put("weight", series.getWeight());
@@ -179,31 +187,18 @@ public class activity_rutina_empezada extends AppCompatActivity {
         }
         workoutData.put("exercises", exercisesData);
 
-        // Guardar los datos del entrenamiento en Firebase
 
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 workoutCount = dataSnapshot.getChildrenCount();
                 workoutId = String.valueOf(workoutCount);
-
-                // Agregar el entrenamiento con el ID autoincremental
-                databaseRef.child(workoutId).setValue(workoutData)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("Firebase", "Workout stored successfully");
-                                } else {
-                                    Log.e("Firebase", "Error storing workout", task.getException());
-                                }
-                            }
-                        });
+                databaseRef.child(workoutId).setValue(workoutData);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase", "Error getting workout count", databaseError.toException());
+                Log.e("Firebase", "Error al intentar recoger el count de la bbdd", databaseError.toException());
             }
         });
     }

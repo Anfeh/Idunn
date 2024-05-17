@@ -1,4 +1,4 @@
-package com.example.idunn;
+package com.example.idunn.Usuario;
 
 import static android.content.ContentValues.TAG;
 
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.idunn.Datos.Measurement;
+import com.example.idunn.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class activity_modificar_medidas extends AppCompatActivity {
 
+    /* Variables usadas*/
+
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
     private TextInputEditText weightEditText, heightEditText, armEditText, legEditText, forearmEditText, chestEditText, calfEditText, waistEditText;
@@ -28,47 +31,17 @@ public class activity_modificar_medidas extends AppCompatActivity {
     private DatabaseReference measurementsRef;
     private String userId;
     private Button saveButton;
+
+    /* ------------------------------------------ */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar_medidas);
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-
-        weightEditText = findViewById(R.id.weightEditText);
-        heightEditText = findViewById(R.id.heightEditText);
-        armEditText = findViewById(R.id.armEditText);
-        legEditText = findViewById(R.id.legEditText);
-        forearmEditText = findViewById(R.id.forearmEditText);
-        chestEditText = findViewById(R.id.chestEditText);
-        calfEditText = findViewById(R.id.calfEditText);
-        waistEditText = findViewById(R.id.waistEditText);
-
+        initViews();
         cargarMedidas();
+        setListeners();
 
-        saveButton = findViewById(R.id.saveButton);
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                weightText = Integer.parseInt(weightEditText.getText().toString());
-                heightText = Integer.parseInt(heightEditText.getText().toString());
-                armText = Integer.parseInt(armEditText.getText().toString());
-                legText = Integer.parseInt(legEditText.getText().toString());
-                forearmText = Integer.parseInt(forearmEditText.getText().toString());
-                chestText = Integer.parseInt(chestEditText.getText().toString());
-                calfText = Integer.parseInt(calfEditText.getText().toString());
-                waistText = Integer.parseInt(waistEditText.getText().toString());
-                measurement = new Measurement(armText, calfText, chestText, forearmText, heightText, weightText, legText, waistText);
-                userId = mAuth.getCurrentUser().getUid();
-                measurementsRef = mDatabase.getReference("users").child(userId).child("measurements");
-
-                measurementsRef.setValue(measurement);
-
-                finish();
-            }
-        });
     }
 
     private void cargarMedidas() {
@@ -92,7 +65,42 @@ public class activity_modificar_medidas extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "Error al cargar las medidas del usuario.", databaseError.toException());
+            }
+        });
+    }
+
+    private void initViews(){
+        mDatabase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        weightEditText = findViewById(R.id.weightEditText);
+        heightEditText = findViewById(R.id.heightEditText);
+        armEditText = findViewById(R.id.armEditText);
+        legEditText = findViewById(R.id.legEditText);
+        forearmEditText = findViewById(R.id.forearmEditText);
+        chestEditText = findViewById(R.id.chestEditText);
+        calfEditText = findViewById(R.id.calfEditText);
+        waistEditText = findViewById(R.id.waistEditText);
+        saveButton = findViewById(R.id.saveButton);
+    }
+    private void setListeners(){
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weightText = Integer.parseInt(weightEditText.getText().toString());
+                heightText = Integer.parseInt(heightEditText.getText().toString());
+                armText = Integer.parseInt(armEditText.getText().toString());
+                legText = Integer.parseInt(legEditText.getText().toString());
+                forearmText = Integer.parseInt(forearmEditText.getText().toString());
+                chestText = Integer.parseInt(chestEditText.getText().toString());
+                calfText = Integer.parseInt(calfEditText.getText().toString());
+                waistText = Integer.parseInt(waistEditText.getText().toString());
+                measurement = new Measurement(armText, calfText, chestText, forearmText, heightText, weightText, legText, waistText);
+                userId = mAuth.getCurrentUser().getUid();
+                measurementsRef = mDatabase.getReference("users").child(userId).child("measurements");
+
+                measurementsRef.setValue(measurement);
+
+                finish();
             }
         });
     }

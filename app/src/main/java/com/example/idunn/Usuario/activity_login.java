@@ -34,9 +34,13 @@ public class activity_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // Inicializamos todos los métodos
+        initViews();
+        setListeners();
 
+    }
 
-
+    public void initViews(){
         // Referencia para usar FirebaseAuth.
         mAuth = FirebaseAuth.getInstance();
 
@@ -45,7 +49,9 @@ public class activity_login extends AppCompatActivity {
         signUp = findViewById(R.id.textView2);
         emailEditText = findViewById(R.id.inputUser);
         passwordEditText = findViewById(R.id.inputPassword);
+    }
 
+    public void setListeners(){
         // Si le damos click en el login haremos lo siguiente
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

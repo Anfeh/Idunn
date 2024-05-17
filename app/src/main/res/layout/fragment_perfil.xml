@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/emailTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="50dp"
         android:text="Medidas"
         android:textSize="24dp"
         app:cornerRadius="10dp"

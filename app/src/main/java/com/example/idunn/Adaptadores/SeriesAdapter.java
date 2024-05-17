@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,8 +82,11 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
 
         public void bind(Series series) {
             serieTextView.setText(String.valueOf(series.getSerie()));
+
+            /*
             repetitionsEditText.setText(String.valueOf(series.getRepetitions()));
             weightEditText.setText(String.valueOf(series.getWeight()));
+             */
         }
     }
 }

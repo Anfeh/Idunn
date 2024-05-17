@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity_agregar_entrenamiento"
+    tools:context=".Usuario.activity_agregar_entrenamiento"
     android:padding="16dp"
     android:background="@color/background">
 
@@ -15,13 +15,14 @@
         android:layout_height="wrap_content"
         android:text="Nombre entrenamiento"
         android:textSize="22dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/chopin"
         android:textStyle="bold"/>
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/editTextNombreEntrenamiento"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:inputType="text"
         android:background="@drawable/edittexstyletrain"
         android:layout_marginTop="10dp"
@@ -42,9 +43,9 @@
         android:textStyle="bold"/>
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/editTextNumSeries"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:inputType="number"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"

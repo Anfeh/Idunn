@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".Agregar">
+    tools:context=".Fragments.Agregar">
 
 
     <ImageView
@@ -19,13 +19,14 @@
     <Button
         android:id="@+id/agregarEntrenamientoButton"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/green"
         android:text="Agregar entrenamiento"
         android:fontFamily="@font/chopin"
         android:textStyle="bold"
+        android:textSize="24dp"
         app:cornerRadius="10dp" />
 
     <ImageView

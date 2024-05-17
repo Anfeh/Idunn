@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_modificar_medidas"
+    tools:context=".Usuario.activity_modificar_medidas"
     android:background="@color/background">
     <TextView
         android:id="@+id/titleTextView"
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="pesoEjemplo"
             android:textSize="24sp"
+            android:inputType="number"
             android:fontFamily="@font/chopin"
             android:textStyle="bold"/>
 
@@ -61,6 +62,7 @@
             android:text="estaturaEjemplo"
             android:textSize="24sp"
             android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:textStyle="bold"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -81,10 +83,11 @@
             android:id="@+id/armEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:text="25cm"
             android:textSize="24sp"
-            android:fontFamily="@font/chopin"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,10 +106,11 @@
             android:id="@+id/legEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:text="25cm"
             android:textSize="24sp"
-            android:fontFamily="@font/chopin"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,10 +129,11 @@
             android:id="@+id/forearmEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:text="25cm"
             android:textSize="24sp"
-            android:fontFamily="@font/chopin"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,10 +152,11 @@
             android:id="@+id/chestEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:text="25cm"
             android:textSize="24sp"
-            android:fontFamily="@font/chopin"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,10 +175,11 @@
             android:id="@+id/calfEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:text="25cm"
             android:textSize="24sp"
-            android:fontFamily="@font/chopin"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -191,10 +198,11 @@
             android:id="@+id/waistEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/chopin"
+            android:inputType="number"
             android:text="25cm"
             android:textSize="24sp"
-            android:fontFamily="@font/chopin"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

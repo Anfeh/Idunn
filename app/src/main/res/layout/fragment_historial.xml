@@ -6,17 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".Historial">
+    tools:context=".Fragments.Historial">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ultimos entrenamientos"
+        android:text="Tus últimos entrenamientos"
         android:textSize="26dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="45dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/chopin"
         android:textStyle="bold"/>
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="320dp"
+        android:layout_gravity="center"
+        android:layout_height="2dp"
+        android:layout_marginTop="15dp"
+        android:src="@android:drawable/progress_horizontal" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

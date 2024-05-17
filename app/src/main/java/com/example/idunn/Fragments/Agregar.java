@@ -1,4 +1,4 @@
-package com.example.idunn;
+package com.example.idunn.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,10 @@ import com.example.idunn.Datos.Exercises;
 import com.example.idunn.Datos.Series;
 import com.example.idunn.Datos.User;
 import com.example.idunn.Datos.Workout;
+import com.example.idunn.DatosEntrenamiento;
 import com.example.idunn.Logica.CurrentUser;
+import com.example.idunn.R;
+import com.example.idunn.Usuario.activity_agregar_entrenamiento;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
