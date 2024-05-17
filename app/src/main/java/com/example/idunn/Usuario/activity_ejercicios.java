@@ -41,70 +41,50 @@ public class activity_ejercicios extends AppCompatActivity {
     private LinearLayout.LayoutParams layoutParams;
     /* -------------------------------------------------------- */
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ejercicios);
 
-        // Declaración para el uso del recycler view y ajustando su adaptador
-        recyclerViewEjerciciosList = findViewById(R.id.recycler_view_ejercicios_list);
-        recyclerViewEjerciciosList.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AdapterExercise(exercisesList);
-        recyclerViewEjerciciosList.setAdapter(adapter);
+        linearLayout = findViewById(R.id.linearLayoutEjercicios);
 
-        // Referencias al xml
-        tituloEjercicio = findViewById(R.id.tituloEjercicio);
-
-        // Llamada para obtener los datos de Firebase
         ref = FirebaseDatabase.getInstance().getReference("workout_exercises");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Recorremos los ejercicios
                 for (DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()) {
-
-
-                    // Obtenemos si nombre y los ponemos en los TextViews
-                    exerciseName = exerciseSnapshot.child("name").getValue(String.class);
-                    titleTextView = new TextView(activity_ejercicios.this);
+                    String exerciseName = exerciseSnapshot.child("name").getValue(String.class);
+                    TextView titleTextView = new TextView(activity_ejercicios.this);
                     titleTextView.setText(exerciseName);
                     titleTextView.setTextSize(20);
 
-                    // Referenciamos en el xml al LinearLayout
-                    linearLayout = findViewById(R.id.linearLayoutEjercicios);
-
-                    // Lo agregamos al LinearLayout
-                    linearLayout.addView(titleTextView);
-
-                    // Creación de parámetros de diseño con una anchura de MATCH_PARENT y una altura de WRAP_CONTENT
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-                    // Y lo aplicamos
                     titleTextView.setLayoutParams(layoutParams);
 
-                    // Creación y destrucción continua para obtener los ejercicios de cada Grupo muscular
-                    exerciseList = new ArrayList<>();
+                    linearLayout.addView(titleTextView);
 
-                    // Recorremos los nodos de exercises
+                    List<String> exerciseList = new ArrayList<>();
                     for (DataSnapshot exercise : exerciseSnapshot.child("exercises").getChildren()) {
-
-                        // Y los almacenamos en la lista
-                        if(exerciseSnapshot.child("name").getValue(String.class).equals(exerciseName)){
-                            exerciseItem = exercise.child("name").getValue(String.class);
-                            exerciseList.add(exerciseItem);
-                        }
-
+                        exerciseList.add(exercise.child("name").getValue(String.class));
                     }
 
-
-                    // Creamos el recyclerview y adaptador y los seteamos
-                    recyclerView = new RecyclerView(activity_ejercicios.this);
+                    RecyclerView recyclerView = new RecyclerView(activity_ejercicios.this);
                     recyclerView.setLayoutManager(new LinearLayoutManager(activity_ejercicios.this));
-                    adapter = new AdapterExercise(exerciseList);
+                    AdapterExercise adapter = new AdapterExercise(exerciseList, new AdapterExercise.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            String selectedExerciseName = exerciseList.get(position);
+                            ArrayList<String> selectedExerciseNames = new ArrayList<>();
+                            selectedExerciseNames.add(selectedExerciseName);
+                            intent = new Intent();
+                            intent.putStringArrayListExtra("selected_ejercicios", selectedExerciseNames);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    });
                     recyclerView.setAdapter(adapter);
-                    linearLayout.setPadding(20,10,0,10);
                     linearLayout.addView(recyclerView);
-
                 }
             }
 
@@ -114,6 +94,8 @@ public class activity_ejercicios extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     public void onItemClick(int position) {

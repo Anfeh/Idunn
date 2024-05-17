@@ -167,19 +167,14 @@ public class activity_agregar_entrenamiento extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Llamamos al método de onActivityResult de la clase base para realizar procesamientos de request y result
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Comprobamos si la actividad que iniciamos previamente con startActivityForResult() es true igualando a 1
-        // y si es RESULT_OK indicamos que la actividad se cargó por completo.
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Obtenemos el ejercicio de activity previamente proporcionado con el extra
-            selectedExerciseNames = data.getStringArrayListExtra("selected_ejercicios");
+            ArrayList<String> selectedExerciseNames = data.getStringArrayListExtra("selected_ejercicios");
             if (selectedExerciseNames != null && !selectedExerciseNames.isEmpty()) {
-                // Los agregamos si no están vacíos
                 ejercicios.addAll(selectedExerciseNames);
                 adapter.notifyDataSetChanged();
             }
         }
     }
+
 }

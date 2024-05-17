@@ -13,42 +13,59 @@ import com.example.idunn.Usuario.activity_ejercicios;
 
 import java.util.List;
 
-public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHolder> {
-    private List<String> exerciseNames;
+public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ExerciseViewHolder> {
+    private List<String> exercises;
+    private OnItemClickListener listener;
 
-    public AdapterExercise(List<String> exerciseNames) {
-        this.exerciseNames = exerciseNames;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public AdapterExercise(List<String> exercises, OnItemClickListener listener) {
+        this.exercises = exercises;
+        this.listener = listener;
+    }
+    public AdapterExercise(List<String> exercises) {
+        this.exercises = exercises;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_item, parent, false);
-        return new ViewHolder(view);
+        return new ExerciseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String exerciseName = exerciseNames.get(position);
-        holder.textViewEjercicio.setText(exerciseName);
+    public void onBindViewHolder(@NonNull ExerciseViewHolder holder, int position) {
+        String exercise = exercises.get(position);
+        holder.bind(exercise, listener);
     }
 
     @Override
     public int getItemCount() {
-        return exerciseNames.size();
+        return exercises.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewEjercicio;
+    public static class ExerciseViewHolder extends RecyclerView.ViewHolder {
+        private TextView textViewExercise;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewEjercicio = itemView.findViewById(R.id.nombreEjercicio);
+            textViewExercise = itemView.findViewById(R.id.nombreEjercicio);
+        }
+
+        public void bind(final String exercise, final OnItemClickListener listener) {
+            textViewExercise.setText(exercise);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    ((activity_ejercicios) itemView.getContext()).onItemClick(position);
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
                 }
             });
         }
