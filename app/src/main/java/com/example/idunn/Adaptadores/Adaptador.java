@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.idunn.DatosEntrenamiento;
 import com.example.idunn.R;
 import com.example.idunn.Usuario.activity_detailed_train;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -22,10 +27,12 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
     Context context;
     ArrayList<DatosEntrenamiento> datosEntrenamientos;
+    String userId;
 
-    public Adaptador(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientos) {
+    public Adaptador(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientos, String userId) {
         this.context = context;
         this.datosEntrenamientos = datosEntrenamientos;
+        this.userId=userId;
     }
 
     @NonNull
@@ -51,6 +58,12 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
             holder.additionalTextContainer.addView(additionalTextView);
         }
+        holder.eliminarEntrenamiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eliminarEntrenamiento(position);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +84,33 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tituloEjercicio;
         LinearLayout additionalTextContainer;
+        TextView eliminarEntrenamiento;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tituloEjercicio = itemView.findViewById(R.id.tituloTarjeta);
             additionalTextContainer = itemView.findViewById(R.id.additional_text_container);
+            eliminarEntrenamiento = itemView.findViewById(R.id.eliminarEntrenamiento);
         }
+    }
+    private void eliminarEntrenamiento(int position) {
+        // Obtener la referencia al entrenamiento que deseas eliminar
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("users").child(userId).child("workouts").child(String.valueOf(position));
+
+        userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Entrenamiento eliminado exitosamente", Toast.LENGTH_SHORT).show();
+                datosEntrenamientos.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, datosEntrenamientos.size());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Error al eliminar el entrenamiento", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

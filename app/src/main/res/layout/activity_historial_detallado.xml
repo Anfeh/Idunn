@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Usuario.activity_detailed_train"
     android:orientation="vertical"
+    tools:context=".activity_historial_detallado"
     android:background="@color/background">
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -64,18 +63,6 @@
                     />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/empezarEntrenamiento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Empezar entrenamiento"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textColor="@color/green"
-                android:fontFamily="@font/chopin"
-                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>

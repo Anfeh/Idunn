@@ -1,6 +1,7 @@
 package com.example.idunn.Adaptadores;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idunn.DatosEntrenamiento;
 import com.example.idunn.R;
+import com.example.idunn.Usuario.activity_detailed_train;
+import com.example.idunn.activity_historial_detallado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +23,10 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList;
+    private Context context;
 
-    TextView additionalTextView;
-    Context context;
-
-    public HistoryAdapter(Context context,ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList) {
-        this.context=context;
+    public HistoryAdapter(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList) {
+        this.context = context;
         this.datosEntrenamientoArrayList = datosEntrenamientoArrayList;
     }
 
@@ -42,7 +43,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.textFecha.setText(datos.getFecha());
         holder.tituloTarjeta.setText(datos.getNombreRutina());
 
-        holder.additionalTextContainer.removeAllViews(); // Clear previous views
+        holder.additionalTextContainer.removeAllViews();
 
         List<String> exerciseNames = datos.getNombreEntrenamiento();
         List<String> seriesCounts = datos.getSeries();
@@ -60,6 +61,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
             holder.additionalTextContainer.addView(additionalTextView);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, activity_historial_detallado.class);
+                intent.putExtra("clicked_item", datos);
+                intent.putExtra("series", datos.getSeries().toArray(new String[0]));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -67,10 +78,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return datosEntrenamientoArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textFecha, tituloTarjeta;
         LinearLayout additionalTextContainer;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

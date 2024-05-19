@@ -9,6 +9,7 @@ public class DatosEntrenamiento implements Serializable {
 
     private String nombreRutina;
     private String fecha;
+    private String cronometro;
     private List<String> nombreEntrenamiento;
     private List<String> series;
 
@@ -19,8 +20,9 @@ public class DatosEntrenamiento implements Serializable {
         this.nombreEntrenamiento = nombreEntrenamiento;
         this.series = series;
     }
-    public DatosEntrenamiento(String fecha,String nombreRutina, List<String> nombreEntrenamiento, List<String> series) {
+    public DatosEntrenamiento(String fecha,String cronometro,String nombreRutina, List<String> nombreEntrenamiento, List<String> series) {
         this.fecha=fecha;
+        this.cronometro=cronometro;
         this.nombreRutina = nombreRutina;
         this.nombreEntrenamiento = nombreEntrenamiento;
         this.series = series;
@@ -56,5 +58,13 @@ public class DatosEntrenamiento implements Serializable {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getCronometro() {
+        return cronometro;
+    }
+
+    public void setCronometro(String cronometro) {
+        this.cronometro = cronometro;
     }
 }

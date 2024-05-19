@@ -129,6 +129,8 @@ public class activity_rutina_empezada extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 exercisesList = new ArrayList<>();
+
+
                 for (int i = 0; i < recyclerViewsList.size(); i++) {
                     recyclerView = recyclerViewsList.get(i);
                     nombreEjercicio = datosEntrenamiento.getNombreEntrenamiento().get(i);
@@ -137,19 +139,13 @@ public class activity_rutina_empezada extends AppCompatActivity {
                     enteredData = adapter.getEnteredData();
                     seriesList = new ArrayList<>();
                     for (Series series : enteredData) {
+
                         seriesList.add(new Series(series.getSerie(), series.getRepetitions(), series.getWeight()));
                     }
-
                     exercisesList.add(new Exercises(nombreEjercicio, seriesList));
-                    //Toast.makeText(activity_rutina_empezada.this, "Rellene todos los campos...", Toast.LENGTH_SHORT).show();
-
                 }
-
-
-                storeWorkout(datosEntrenamiento.getNombreRutina(), getFechaActual(), chronometer.getText().toString(), exercisesList);
-
-                // Finalizar la actividad
-                finish();
+                    storeWorkout(datosEntrenamiento.getNombreRutina(), getFechaActual(), chronometer.getText().toString(), exercisesList);
+                    finish();
             }
         });
     }

@@ -107,7 +107,7 @@ public class Agregar extends Fragment {
                     recyclerView = view.findViewById(R.id.recyclerView);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setHasFixedSize(true);
-                    adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList);
+                    adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList, uid);
 
                     recyclerView.setAdapter(adaptador);
                     adaptador.notifyDataSetChanged();

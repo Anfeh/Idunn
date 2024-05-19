@@ -31,7 +31,7 @@ public class Historial extends Fragment {
     private RecyclerView recyclerView;
     private HistoryAdapter adaptador;
 
-    private String date, workoutName, exerciseName, totalSeries, uid;
+    private String date, workoutName, exerciseName, totalSeries, uid, time;
     private List<String> exerciseNames, seriesCount;
     private DatosEntrenamiento datos;
 
@@ -71,6 +71,7 @@ public class Historial extends Fragment {
                             for (DataSnapshot snapshot : task.getResult().getChildren()) {
 
                                 date = snapshot.child("date").getValue(String.class);
+                                time = snapshot.child("time").getValue(String.class);
                                 workoutName = snapshot.child("workout_name").getValue(String.class);
                                 exerciseNames = new ArrayList<>();
                                 seriesCount = new ArrayList<>();
@@ -82,7 +83,7 @@ public class Historial extends Fragment {
                                     seriesCount.add(totalSeries);
                                 }
 
-                                datos = new DatosEntrenamiento(date, workoutName, exerciseNames, seriesCount);
+                                datos = new DatosEntrenamiento(date, time,workoutName, exerciseNames, seriesCount);
                                 datosEntrenamientoArrayList.add(datos);
                             }
                             adaptador.notifyDataSetChanged();

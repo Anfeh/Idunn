@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:exported="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logoidunn"
         android:label="Idunn"
-        android:exported="true"
         android:roundIcon="@drawable/logoidunn"
         android:supportsRtl="true"
         android:theme="@style/Theme.Idunn"
         tools:targetApi="34">
+        <activity
+            android:name=".activity_historial_detallado"
+            android:exported="false" />
         <activity
             android:name=".Usuario.activity_ejercicios"
             android:exported="false" />
@@ -22,7 +27,6 @@
         <activity
             android:name=".activity_rutina_empezada"
             android:exported="false" />
-
         <activity
             android:name=".Usuario.activity_modificar_medidas"
             android:exported="false" />

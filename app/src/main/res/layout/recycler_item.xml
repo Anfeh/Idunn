@@ -7,6 +7,17 @@
     android:outlineAmbientShadowColor="#000000"
     android:outlineProvider="none"
     android:outlineSpotShadowColor="#000000">
+    <TextView
+        android:id="@+id/eliminarEntrenamiento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Eliminar entrenamiento"
+        android:textAlignment="textEnd"
+        android:textSize="14dp"
+        android:layout_marginRight="40dp"
+        android:textColor="@color/red"
+        android:fontFamily="@font/chopin"
+        android:textStyle="bold"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/tarjeta"

@@ -61,6 +61,14 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         }
         return enteredData;
     }
+    public boolean areAllFieldsFilled() {
+        for (Series series : seriesList) {
+            if (series.getRepetitions() == 0 || series.getWeight() == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void addSeries(Series series) {
         seriesList.add(series);
