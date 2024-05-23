@@ -53,7 +53,7 @@ public class Historial extends Fragment {
         return inflater.inflate(R.layout.fragment_historial, container, false);
     }
 
-    // Historial.java
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -70,20 +70,20 @@ public class Historial extends Fragment {
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DataSnapshot snapshot : task.getResult().getChildren()) {
-                                date = snapshot.child("date").getValue(String.class);
-                                time = snapshot.child("time").getValue(String.class);
-                                workoutName = snapshot.child("workout_name").getValue(String.class);
-                                exerciseNames = new ArrayList<>();
-                                seriesCount = new ArrayList<>();
+                                String date = snapshot.child("date").getValue(String.class);
+                                String time = snapshot.child("time").getValue(String.class);
+                                String workoutName = snapshot.child("workout_name").getValue(String.class);
+                                List<String> exerciseNames = new ArrayList<>();
+                                List<String> seriesCount = new ArrayList<>();
 
                                 for (DataSnapshot exerciseSnapshot : snapshot.child("exercises").getChildren()) {
-                                    exerciseName = exerciseSnapshot.child("name").getValue(String.class);
+                                    String exerciseName = exerciseSnapshot.child("name").getValue(String.class);
                                     exerciseNames.add(exerciseName);
-                                    totalSeries = String.valueOf(exerciseSnapshot.child("series").getChildrenCount());
+                                    String totalSeries = String.valueOf(exerciseSnapshot.child("series").getChildrenCount());
                                     seriesCount.add(totalSeries);
                                 }
 
-                                datos = new DatosEntrenamiento(date, time, workoutName, exerciseNames, seriesCount);
+                                DatosEntrenamiento datos = new DatosEntrenamiento(date, time, workoutName, exerciseNames, seriesCount);
                                 datosEntrenamientoArrayList.add(datos);
                             }
                             adaptador.notifyDataSetChanged();
@@ -91,6 +91,7 @@ public class Historial extends Fragment {
                     }
                 });
     }
+
 
 
 

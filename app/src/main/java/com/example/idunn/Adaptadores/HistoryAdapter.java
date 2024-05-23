@@ -23,10 +23,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     private ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList;
     private Context context;
-    private Intent intent;
-    private DatosEntrenamiento datos;
-    private List<String> exerciseNames, seriesCounts;
-    private String exerciseName, totalSeries;
+    List<String> exerciseNames, seriesCounts;
+    TextView additionalTextView;
+    Intent intent;
 
     public HistoryAdapter(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList) {
         this.context = context;
@@ -42,7 +41,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        datos = datosEntrenamientoArrayList.get(position);
+        DatosEntrenamiento datos = datosEntrenamientoArrayList.get(position);
         holder.textFecha.setText(datos.getFecha());
         holder.tituloTarjeta.setText(datos.getNombreRutina());
 
@@ -52,10 +51,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         seriesCounts = datos.getSeries();
 
         for (int i = 0; i < exerciseNames.size(); i++) {
-            exerciseName = exerciseNames.get(i);
-            totalSeries = seriesCounts.get(i);
+            String exerciseName = exerciseNames.get(i);
+            String totalSeries = seriesCounts.get(i);
 
-            TextView additionalTextView = new TextView(context);
+            additionalTextView = new TextView(context);
             additionalTextView.setText(exerciseName + " x " + totalSeries + " series");
             additionalTextView.setTextSize(13);
             additionalTextView.setTextColor(Color.BLACK);

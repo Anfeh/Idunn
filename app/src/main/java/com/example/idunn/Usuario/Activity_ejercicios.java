@@ -63,7 +63,7 @@ public class Activity_ejercicios extends AppCompatActivity {
 
                     linearLayout.addView(titleTextView);
 
-                    exerciseList = new ArrayList<>();
+                    List<String> exerciseList = new ArrayList<>();
                     for (DataSnapshot exercise : exerciseSnapshot.child("exercises").getChildren()) {
                         exerciseList.add(exercise.child("name").getValue(String.class));
                     }

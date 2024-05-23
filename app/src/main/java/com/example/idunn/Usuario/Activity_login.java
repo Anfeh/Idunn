@@ -37,7 +37,12 @@ public class Activity_login extends AppCompatActivity {
         // Inicializamos todos los métodos
         initViews();
         setListeners();
-
+        if (mAuth.getCurrentUser() != null) {
+            // Si usuario se ha logueado, redirigimos a Activity_navegacion
+            intent = new Intent(Activity_login.this, Activity_navegacion.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void initViews(){

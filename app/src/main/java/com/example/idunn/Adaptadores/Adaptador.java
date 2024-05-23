@@ -47,7 +47,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        datosEntrenamiento = datosEntrenamientos.get(position);
+        DatosEntrenamiento datosEntrenamiento = datosEntrenamientos.get(position);
         holder.tituloEjercicio.setText(datosEntrenamiento.getNombreRutina());
         holder.additionalTextContainer.removeAllViews();
 

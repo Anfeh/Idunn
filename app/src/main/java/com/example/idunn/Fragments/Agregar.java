@@ -94,9 +94,10 @@ public class Agregar extends Fragment {
                         for (Workout workout : workouts) {
                             exerciseNames = new ArrayList<>();
                             exercises = workout.getExercises();
+                            numSeries=null;
                             if (exercises != null) {
-                                numSeries = new ArrayList<>();
                                 for (Exercises exercise : exercises) {
+                                    numSeries = new ArrayList<>();
                                     exerciseNames.add(exercise.getName());
                                     series = exercise.getSeries();
                                     if (series != null) {
