@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class activity_agregar_entrenamiento extends AppCompatActivity {
+public class Activity_agregar_entrenamiento extends AppCompatActivity {
     /* Variables usadas */
     private EditText editTextNombreEntrenamiento;
     private EditText editTextNumSeries;
@@ -77,7 +77,7 @@ public class activity_agregar_entrenamiento extends AppCompatActivity {
         editTextAgregarEjercicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity_agregar_entrenamiento.this, activity_ejercicios.class);
+                Intent intent = new Intent(Activity_agregar_entrenamiento.this, Activity_ejercicios.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -92,7 +92,7 @@ public class activity_agregar_entrenamiento extends AppCompatActivity {
                 // Si ninguno de los 2 esta vacio procedemos
                 if (!nombreEntrenamiento.isEmpty() && !numSeries.isEmpty()) {
                     if (Integer.parseInt(numSeries) > 5) {
-                        Toast.makeText(activity_agregar_entrenamiento.this, "Introduzca menos de 6 series porfavor...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_agregar_entrenamiento.this, "Introduzca menos de 6 series porfavor...", Toast.LENGTH_SHORT).show();
                     } else {
                         workout = new HashMap<>();
                         workout.put("name", nombreEntrenamiento);
@@ -142,9 +142,9 @@ public class activity_agregar_entrenamiento extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Log.d("Firebase", "Workout stored successfully");
+                                            Log.d("Firebase", "Se guardo correctamente el etrenamiento");
                                         } else {
-                                            Log.e("Firebase", "Error storing workout", task.getException());
+                                            Log.e("Firebase", "Error al guardar", task.getException());
                                         }
                                     }
                                 });
@@ -159,7 +159,7 @@ public class activity_agregar_entrenamiento extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    Toast.makeText(activity_agregar_entrenamiento.this, "Porfavor rellene todos los campos...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_agregar_entrenamiento.this, "Porfavor rellene todos los campos...", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -169,7 +169,7 @@ public class activity_agregar_entrenamiento extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            ArrayList<String> selectedExerciseNames = data.getStringArrayListExtra("selected_ejercicios");
+            selectedExerciseNames = data.getStringArrayListExtra("selected_ejercicios");
             if (selectedExerciseNames != null && !selectedExerciseNames.isEmpty()) {
                 ejercicios.addAll(selectedExerciseNames);
                 adapter.notifyDataSetChanged();

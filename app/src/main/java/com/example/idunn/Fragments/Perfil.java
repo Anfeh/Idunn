@@ -1,34 +1,42 @@
 package com.example.idunn.Fragments;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.idunn.Datos.User;
 import com.example.idunn.Logica.CurrentUser;
 import com.example.idunn.R;
-import com.example.idunn.Usuario.activity_login;
-import com.example.idunn.Usuario.activity_modificar_medidas;
+import com.example.idunn.Usuario.Activity_login;
+import com.example.idunn.Usuario.Activity_modificar_medidas;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Perfil extends Fragment {
 
-    private FirebaseAuth mAuth;
     private CurrentUser mCurrentUser;
-    private View view;
+    private View view, popupView;
     private Button medidasButton;
-    private TextView nameTextView, emailTextView;
+    private TextView nameTextView, emailTextView, closeTextView, textViewSobreMi, logOutTextView;
     private String uid;
     private Intent intent;
-    private TextView logOutTextView;
+    private Animation animEnter;
+    private int width, height;
+    private boolean focusable;
+    private LayoutInflater inflater;
+
     public Perfil() {
 
     }
@@ -42,12 +50,14 @@ public class Perfil extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_perfil, container, false);
-        medidasButton = view.findViewById(R.id.medidasButton);
-        mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
 
+        medidasButton = view.findViewById(R.id.medidasButton);
         nameTextView = view.findViewById(R.id.nameTextView);
         emailTextView = view.findViewById(R.id.emailTextView);
         logOutTextView = view.findViewById(R.id.logOutTextView);
+
+
+        mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
             @Override
@@ -61,24 +71,56 @@ public class Perfil extends Fragment {
         medidasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getActivity(), activity_modificar_medidas.class);
+                intent = new Intent(getActivity(), Activity_modificar_medidas.class);
                 startActivity(intent);
             }
         });
         logOutTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Cerramos sesión del usuario
                 FirebaseAuth.getInstance().signOut();
 
-                // Redirigirimos a la pantalla de inicio de sesión
-                Intent intent = new Intent(getActivity(), activity_login.class);
+                intent = new Intent(getActivity(), Activity_login.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                getActivity().finish(); // Cierra la actividad actual
+                getActivity().finish();
+            }
+        });
+        textViewSobreMi = view.findViewById(R.id.textViewSobreMi);
+
+        textViewSobreMi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup();
             }
         });
 
         return view;
     }
+
+    private void showPopup() {
+        inflater = LayoutInflater.from(getContext());
+        popupView = inflater.inflate(R.layout.popup_sobremi, null);
+
+        width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        focusable = true;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        animEnter = AnimationUtils.loadAnimation(getContext(), R.anim.popup_aparecer);
+        popupView.startAnimation(animEnter);
+
+        popupWindow.showAtLocation(textViewSobreMi, Gravity.CENTER, 0, 0);
+
+        closeTextView = popupView.findViewById(R.id.closeTextView);
+        closeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Animation animExit = AnimationUtils.loadAnimation(getContext(), R.anim.popup_desaparecer);
+                popupView.startAnimation(animExit);
+                popupWindow.dismiss();
+            }
+        });
+    }
+
 }

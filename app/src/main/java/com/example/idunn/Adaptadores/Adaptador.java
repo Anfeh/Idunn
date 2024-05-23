@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idunn.DatosEntrenamiento;
 import com.example.idunn.R;
-import com.example.idunn.Usuario.activity_detailed_train;
+import com.example.idunn.Usuario.Activity_detailed_train;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -25,9 +25,12 @@ import java.util.ArrayList;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
-    Context context;
-    ArrayList<DatosEntrenamiento> datosEntrenamientos;
-    String userId;
+    private Context context;
+    private ArrayList<DatosEntrenamiento> datosEntrenamientos;
+    private String userId;
+    private DatosEntrenamiento datosEntrenamiento;
+    private FirebaseDatabase database;
+    private DatabaseReference userRef;
 
     public Adaptador(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientos, String userId) {
         this.context = context;
@@ -44,7 +47,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DatosEntrenamiento datosEntrenamiento = datosEntrenamientos.get(position);
+        datosEntrenamiento = datosEntrenamientos.get(position);
         holder.tituloEjercicio.setText(datosEntrenamiento.getNombreRutina());
         holder.additionalTextContainer.removeAllViews();
 
@@ -68,7 +71,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, activity_detailed_train.class);
+                Intent intent = new Intent(context, Activity_detailed_train.class);
                 intent.putExtra("clicked_item", datosEntrenamiento);
                 intent.putExtra("series", datosEntrenamiento.getSeries().toArray(new String[0]));
                 context.startActivity(intent);
@@ -93,15 +96,14 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
             eliminarEntrenamiento = itemView.findViewById(R.id.eliminarEntrenamiento);
         }
     }
+
     private void eliminarEntrenamiento(int position) {
-        // Obtener la referencia al entrenamiento que deseas eliminar
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = database.getReference("users").child(userId).child("workouts").child(String.valueOf(position));
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference("users").child(userId).child("workouts").child(String.valueOf(position));
 
         userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Entrenamiento eliminado exitosamente", Toast.LENGTH_SHORT).show();
                 datosEntrenamientos.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, datosEntrenamientos.size());

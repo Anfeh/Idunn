@@ -12,7 +12,7 @@ import com.example.idunn.Fragments.Historial;
 import com.example.idunn.Fragments.Perfil;
 import com.example.idunn.databinding.ActivityNavegacionBinding;
 
-public class activity_navegacion extends AppCompatActivity {
+public class Activity_navegacion extends AppCompatActivity {
 
     ActivityNavegacionBinding binding;
     FragmentManager fragmentManager;

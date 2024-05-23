@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.idunn.Datos.User;
 import com.example.idunn.Logica.ValidacionUsuario;
 import com.example.idunn.R;
-import com.example.idunn.activity_navegacion;
+import com.example.idunn.Activity_navegacion;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class activity_registro extends AppCompatActivity {
+public class Activity_registro extends AppCompatActivity {
     /* Variables usadas */
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -55,7 +55,7 @@ public class activity_registro extends AppCompatActivity {
         loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(activity_registro.this, activity_login.class);
+                intent = new Intent(Activity_registro.this, Activity_login.class);
                 startActivity(intent);
             }
         });
@@ -98,7 +98,7 @@ public class activity_registro extends AppCompatActivity {
         if (!ValidacionUsuario.isValidUsername(username)) {
             usernameEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
             if(username.length() <=5 || username.length() >=17){
-                Toast.makeText(activity_registro.this, "Introduzca al menos 6 caracteres y máximo 16 porfavor...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_registro.this, "Introduzca al menos 6 caracteres y máximo 16 porfavor...", Toast.LENGTH_SHORT).show();
             }
             return ;
         }
@@ -106,21 +106,21 @@ public class activity_registro extends AppCompatActivity {
 
         if (!ValidacionUsuario.isValidEmail(email)) {
             emailEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
-            Toast.makeText(activity_registro.this, "Introduzca bien el email...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Activity_registro.this, "Introduzca bien el email...", Toast.LENGTH_SHORT).show();
             return;
         }
         emailEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));
 
         if (!ValidacionUsuario.isValidPassword(password)) {
             passwordEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
-            Toast.makeText(activity_registro.this, "Mínimo 1 mayuscula, letra y caracter especial...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Activity_registro.this, "Mínimo 1 mayuscula, letra y caracter especial...", Toast.LENGTH_SHORT).show();
             return;
         }
 
         usernameEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));
         if (!password.equals(confirmPassword)) {
             confirmPasswordEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_error));
-            Toast.makeText(activity_registro.this, "Introduzca la misma contraseña...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Activity_registro.this, "Introduzca la misma contraseña...", Toast.LENGTH_SHORT).show();
             return;
         }
         confirmPasswordEditText.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_border_success));
@@ -141,13 +141,13 @@ public class activity_registro extends AppCompatActivity {
                             saveUserToDatabase(user.getUid(), username, email, password);
 
                             // Cambiamos a la activity principal una vez creado el usuario
-                            intent = new Intent(activity_registro.this, activity_navegacion.class);
+                            intent = new Intent(Activity_registro.this, Activity_navegacion.class);
                             startActivity(intent);
 
 
 
                         } else {
-                            Toast.makeText(activity_registro.this, "La autenticación falló.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Activity_registro.this, "La autenticación falló.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

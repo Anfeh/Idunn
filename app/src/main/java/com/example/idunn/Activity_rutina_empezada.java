@@ -13,13 +13,10 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.idunn.Adaptadores.SeriesAdapter;
 import com.example.idunn.Datos.Exercises;
 import com.example.idunn.Datos.Series;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class activity_rutina_empezada extends AppCompatActivity {
+public class Activity_rutina_empezada extends AppCompatActivity {
 
     private TextView tituloEntrenamiento;
     private DatosEntrenamiento datosEntrenamiento;

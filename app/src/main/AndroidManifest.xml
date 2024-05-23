@@ -16,34 +16,34 @@
         android:theme="@style/Theme.Idunn"
         tools:targetApi="34">
         <activity
-            android:name=".activity_historial_detallado"
+            android:name=".Activity_historial_detallado"
             android:exported="false" />
         <activity
-            android:name=".Usuario.activity_ejercicios"
+            android:name=".Usuario.Activity_ejercicios"
             android:exported="false" />
         <activity
-            android:name=".Usuario.activity_agregar_entrenamiento"
+            android:name=".Usuario.Activity_agregar_entrenamiento"
             android:exported="false" />
         <activity
-            android:name=".activity_rutina_empezada"
+            android:name=".Activity_rutina_empezada"
             android:exported="false" />
         <activity
-            android:name=".Usuario.activity_modificar_medidas"
+            android:name=".Usuario.Activity_modificar_medidas"
             android:exported="false" />
         <activity
-            android:name=".Usuario.activity_detailed_train"
+            android:name=".Usuario.Activity_detailed_train"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Usuario.activity_registro"
+            android:name=".Usuario.Activity_registro"
             android:exported="false" />
         <activity
-            android:name=".activity_navegacion"
+            android:name=".Activity_navegacion"
             android:exported="false" />
         <activity
-            android:name=".Usuario.activity_login"
+            android:name=".Usuario.Activity_login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Usuario.activity_ejercicios"
+    tools:context=".Usuario.Activity_ejercicios"
 
     android:background="@color/background">
 

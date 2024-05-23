@@ -1,11 +1,8 @@
 package com.example.idunn.Usuario;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class activity_modificar_medidas extends AppCompatActivity {
+public class Activity_modificar_medidas extends AppCompatActivity {
 
     /* Variables usadas*/
 

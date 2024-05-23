@@ -15,6 +15,7 @@ import java.util.List;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder>{
     private List<Exercises> exercises;
+    private Exercises exercise;
 
     public WorkoutAdapter(List<Exercises> exercises) {
         this.exercises = exercises;
@@ -29,7 +30,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull WorkoutAdapter.ViewHolder holder, int position) {
-        Exercises exercise = exercises.get(position);
+        exercise = exercises.get(position);
         holder.textViewEjercicio.setText(exercise.getName());
     }
 

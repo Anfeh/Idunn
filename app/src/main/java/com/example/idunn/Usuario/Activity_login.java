@@ -12,14 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idunn.R;
-import com.example.idunn.activity_navegacion;
+import com.example.idunn.Activity_navegacion;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class activity_login extends AppCompatActivity {
+public class Activity_login extends AppCompatActivity {
     /* Variables usadas */
     private FirebaseAuth mAuth;
     private Button loginButton;
@@ -47,7 +47,7 @@ public class activity_login extends AppCompatActivity {
         // Referenciamos a los elementos del xml.
         loginButton = findViewById(R.id.botonLogin);
         signUp = findViewById(R.id.textView2);
-        emailEditText = findViewById(R.id.inputUser);
+        emailEditText = findViewById(R.id.inputMail);
         passwordEditText = findViewById(R.id.inputPassword);
     }
 
@@ -64,7 +64,7 @@ public class activity_login extends AppCompatActivity {
                 // Si no están vacios nos meteremos usando signInWithEmailAndPassword
                 if(!email.isEmpty() && !password.isEmpty()){
                     mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(activity_login.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(Activity_login.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     // Si el usuario existe en la bbdd tendremos la task succesfull.
@@ -72,16 +72,16 @@ public class activity_login extends AppCompatActivity {
 
                                         // Guardamos el usuario y nos metemos dentro de la aplicación
                                         user = mAuth.getCurrentUser();
-                                        intent = new Intent(activity_login.this, activity_navegacion.class);
+                                        intent = new Intent(Activity_login.this, Activity_navegacion.class);
                                         startActivity(intent);
                                     } else {
-                                        Toast.makeText(activity_login.this, "Autenticación fallida.",
+                                        Toast.makeText(Activity_login.this, "Autenticación fallida.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }else{
-                    Toast.makeText(activity_login.this, "Porfavor rellene los campos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_login.this, "Porfavor rellene los campos.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -91,7 +91,7 @@ public class activity_login extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUpIntent = new Intent(activity_login.this, activity_registro.class);
+                signUpIntent = new Intent(Activity_login.this, Activity_registro.class);
                 startActivity(signUpIntent);
             }
         });

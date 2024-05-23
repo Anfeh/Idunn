@@ -23,7 +23,7 @@ import com.example.idunn.Datos.Workout;
 import com.example.idunn.DatosEntrenamiento;
 import com.example.idunn.Logica.CurrentUser;
 import com.example.idunn.R;
-import com.example.idunn.Usuario.activity_agregar_entrenamiento;
+import com.example.idunn.Usuario.Activity_agregar_entrenamiento;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -76,7 +76,7 @@ public class Agregar extends Fragment {
         agregarEntenamiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), activity_agregar_entrenamiento.class);
+                Intent intent = new Intent(getActivity(), Activity_agregar_entrenamiento.class);
                 startActivity(intent);
             }
         });
@@ -90,19 +90,24 @@ public class Agregar extends Fragment {
             public void onCallback(User user) {
                 if (user != null) {
                     workouts = user.getWorkouts();
-                    for (Workout workout : workouts) {
-                        exerciseNames = new ArrayList<>();
-                        exercises = workout.getExercises();
-                        numSeries = null;
-                        for (Exercises exercise : exercises) {
-                            exerciseNames.add(exercise.getName());
-                            series = exercise.getSeries();
-                            numSeries = new ArrayList<>();
-                            for (Series serie : series) {
-                                numSeries.add(String.valueOf(serie.getSerie()));
+                    if (workouts != null) {
+                        for (Workout workout : workouts) {
+                            exerciseNames = new ArrayList<>();
+                            exercises = workout.getExercises();
+                            if (exercises != null) {
+                                numSeries = new ArrayList<>();
+                                for (Exercises exercise : exercises) {
+                                    exerciseNames.add(exercise.getName());
+                                    series = exercise.getSeries();
+                                    if (series != null) {
+                                        for (Series serie : series) {
+                                            numSeries.add(String.valueOf(serie.getSerie()));
+                                        }
+                                    }
+                                }
+                                datosEntrenamientoArrayList.add(new DatosEntrenamiento(workout.getName(), exerciseNames, numSeries));
                             }
                         }
-                        datosEntrenamientoArrayList.add(new DatosEntrenamiento(workout.getName(), exerciseNames, numSeries));
                     }
                     recyclerView = view.findViewById(R.id.recyclerView);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

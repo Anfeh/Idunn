@@ -9,13 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idunn.R;
-import com.example.idunn.Usuario.activity_ejercicios;
 
 import java.util.List;
 
 public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ExerciseViewHolder> {
     private List<String> exercises;
     private OnItemClickListener listener;
+    private  String exercise;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -38,7 +38,7 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.Exerci
 
     @Override
     public void onBindViewHolder(@NonNull ExerciseViewHolder holder, int position) {
-        String exercise = exercises.get(position);
+        exercise = exercises.get(position);
         holder.bind(exercise, listener);
     }
 
@@ -49,6 +49,7 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.Exerci
 
     public static class ExerciseViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewExercise;
+        private int position;
 
         public ExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,7 +62,7 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.Exerci
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        int position = getAdapterPosition();
+                        position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
                         }

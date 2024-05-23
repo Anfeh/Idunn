@@ -1,8 +1,6 @@
-package com.example.idunn;
+package com.example.idunn.Usuario;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,35 +9,35 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.idunn.DatosEntrenamiento;
+import com.example.idunn.R;
+import com.example.idunn.Activity_rutina_empezada;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class activity_historial_detallado extends AppCompatActivity {
-
-
-
+public class Activity_detailed_train extends AppCompatActivity {
     /* Variables usadas */
 
+    private TextView tituloEntrenamiento;
     private LinearLayout additionalTextContainer;
-    private Intent intent;
+    private Intent intent, intentWithData, intentToRutinaEmpezada;
     private DatosEntrenamiento datosEntrenamiento;
     private String[] seriesArray;
     private List<String> series;
     private View additionalTextView, seriesLinearLayout;
-    private TextView textView, numeroTextView, textViewCronometro, tituloEntrenamiento;
+    private TextView textView, numeroTextView, empezarEntrenamientoTextView;
     /* -------------------------------------------------------------- */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_historial_detallado);
+        setContentView(R.layout.activity_detailed_train);
 
 
         // Referenciamos a los elementos del xml.
         tituloEntrenamiento = findViewById(R.id.tituloEntrenamiento);
         additionalTextContainer = findViewById(R.id.additional_text_container);
-        textViewCronometro = findViewById(R.id.cronometro);
 
 
         // Recogemos los datos que nos han pasado desde el intent anterior.
@@ -56,7 +54,6 @@ public class activity_historial_detallado extends AppCompatActivity {
             // Ponemos el titulo del entrenamiento
             tituloEntrenamiento.setText(datosEntrenamiento.getNombreRutina());
 
-            textViewCronometro.setText(datosEntrenamiento.getCronometro());
 
             // Recorremos los entrenamientos
             for (String additionalText : datosEntrenamiento.getNombreEntrenamiento()) {
@@ -92,5 +89,35 @@ public class activity_historial_detallado extends AppCompatActivity {
         }
 
 
+        // Obtenemos la referencia del xml
+        empezarEntrenamientoTextView = findViewById(R.id.empezarEntrenamiento);
+
+        // Si lo pulsamos ejecutara el método onEmpezarEntrenamientoClick
+        empezarEntrenamientoTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onEmpezarEntrenamientoClick(v);
+            }
+        });
     }
+    public void onEmpezarEntrenamientoClick(View view) {
+
+        // Creamos el intent para pasar a activity_rutina_empezada
+        intentToRutinaEmpezada = new Intent(this, Activity_rutina_empezada.class);
+
+
+        // Recogemos el valor del intent que nos han pasado anteriormente
+        intentWithData = getIntent();
+        datosEntrenamiento = (DatosEntrenamiento) intentWithData.getSerializableExtra("clicked_item");
+        seriesArray = intentWithData.getStringArrayExtra("series");
+
+        // Y lo pasamos a la siguiente activity a través de los intents
+        intentToRutinaEmpezada.putExtra("datosEntrenamiento", datosEntrenamiento);
+        intentToRutinaEmpezada.putExtra("series", seriesArray);
+
+        // Empezamos dicha activity
+        startActivity(intentToRutinaEmpezada);
+    }
+
+
 }

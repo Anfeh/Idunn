@@ -14,7 +14,7 @@
         android:text="Tus últimos entrenamientos"
         android:textSize="26dp"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/chopin"
         android:textStyle="bold"/>
     <ImageView

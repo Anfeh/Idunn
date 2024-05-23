@@ -17,6 +17,9 @@ import java.util.List;
 public class CurrentUser {
 
     private DatabaseReference mDatabase;
+    private User user;
+    private List<Workout_exercises> workoutExercises;
+    private Workout_exercises workoutExercise;
 
     public CurrentUser(DatabaseReference database) {
         mDatabase = database;
@@ -27,7 +30,7 @@ public class CurrentUser {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                user = dataSnapshot.getValue(User.class);
                 if (user != null) {
                     user.setId(uid);
                 }
@@ -46,10 +49,11 @@ public class CurrentUser {
     public interface GetUserCallback {
         void onCallback(User user);
     }
+
     public List<Workout_exercises> getWorkoutExercisesData(User user) {
-        List<Workout_exercises> workoutExercises = new ArrayList<>();
+        workoutExercises = new ArrayList<>();
         for (Workout workout : user.getWorkouts()) {
-            Workout_exercises workoutExercise = new Workout_exercises(workout.getName(), new ArrayList<>());
+            workoutExercise = new Workout_exercises(workout.getName(), new ArrayList<>());
             for (Exercises exercises : workout.getExercises()) {
                 workoutExercise.getExercises().add(new Exercises(exercises.getName(), new ArrayList<>()));
             }

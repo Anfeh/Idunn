@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Usuario.activity_modificar_medidas"
+    tools:context=".Usuario.Activity_modificar_medidas"
     android:background="@color/background">
     <TextView
         android:id="@+id/titleTextView"

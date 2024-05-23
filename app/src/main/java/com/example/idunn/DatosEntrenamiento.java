@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class DatosEntrenamiento implements Serializable {
-
-
     private String nombreRutina;
     private String fecha;
     private String cronometro;

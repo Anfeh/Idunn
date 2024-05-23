@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class activity_ejercicios extends AppCompatActivity {
+public class Activity_ejercicios extends AppCompatActivity {
 
     /* Variables usadas */
     private RecyclerView recyclerViewEjerciciosList, recyclerView;
@@ -41,7 +41,6 @@ public class activity_ejercicios extends AppCompatActivity {
     private LinearLayout.LayoutParams layoutParams;
     /* -------------------------------------------------------- */
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class activity_ejercicios extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()) {
                     String exerciseName = exerciseSnapshot.child("name").getValue(String.class);
-                    TextView titleTextView = new TextView(activity_ejercicios.this);
+                    TextView titleTextView = new TextView(Activity_ejercicios.this);
                     titleTextView.setText(exerciseName);
                     titleTextView.setTextSize(20);
 
@@ -64,13 +63,13 @@ public class activity_ejercicios extends AppCompatActivity {
 
                     linearLayout.addView(titleTextView);
 
-                    List<String> exerciseList = new ArrayList<>();
+                    exerciseList = new ArrayList<>();
                     for (DataSnapshot exercise : exerciseSnapshot.child("exercises").getChildren()) {
                         exerciseList.add(exercise.child("name").getValue(String.class));
                     }
 
-                    RecyclerView recyclerView = new RecyclerView(activity_ejercicios.this);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(activity_ejercicios.this));
+                    RecyclerView recyclerView = new RecyclerView(Activity_ejercicios.this);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(Activity_ejercicios.this));
                     AdapterExercise adapter = new AdapterExercise(exerciseList, new AdapterExercise.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {

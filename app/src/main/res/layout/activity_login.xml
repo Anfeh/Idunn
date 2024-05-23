@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondomitadnegroblanco"
-    tools:context=".Usuario.activity_login"
+    tools:context=".Usuario.Activity_login"
     >
 
     <ImageView
@@ -60,7 +60,7 @@
         app:srcCompat="@drawable/wave" />
 
     <EditText
-        android:id="@+id/inputUser"
+        android:id="@+id/inputMail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="408dp"
@@ -68,7 +68,7 @@
         android:width="320dp"
         android:background="@drawable/edittextstyle"
         android:ems="10"
-        android:hint="User"
+        android:hint="Email"
         android:fontFamily="@font/chopin"
         android:textStyle="bold"
         android:inputType="text"

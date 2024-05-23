@@ -22,6 +22,14 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     private List<Series> seriesList;
     private Context mContext;
     private RecyclerView recyclerView;
+    private List<Series> enteredData;
+    private Series series;
+    private SeriesViewHolder holder;
+    public SeriesAdapter(List<Series> seriesList, Context mContext) {
+        this.seriesList = seriesList;
+        this.mContext = mContext;
+        this.recyclerView = recyclerView;
+    }
 
     public SeriesAdapter(List<Series> seriesList, Context mContext, RecyclerView recyclerView) {
         this.seriesList = seriesList;
@@ -46,12 +54,11 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     public int getItemCount() {
         return seriesList.size();
     }
-
     public List<Series> getEnteredData() {
-        List<Series> enteredData = new ArrayList<>();
+        enteredData = new ArrayList<>();
         for (int i = 0; i < seriesList.size(); i++) {
-            Series series = seriesList.get(i);
-            SeriesViewHolder holder = (SeriesViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+            series = seriesList.get(i);
+            holder = (SeriesViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
             if (holder!= null) {
                 series.setSerie(Integer.parseInt(holder.serieTextView.getText().toString()));
                 series.setRepetitions(Integer.parseInt(holder.repetitionsEditText.getText().toString()));
@@ -90,11 +97,9 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
 
         public void bind(Series series) {
             serieTextView.setText(String.valueOf(series.getSerie()));
-
-            /*
             repetitionsEditText.setText(String.valueOf(series.getRepetitions()));
             weightEditText.setText(String.valueOf(series.getWeight()));
-             */
+
         }
     }
 }
