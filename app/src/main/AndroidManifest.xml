@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Idunn"
         tools:targetApi="34">
         <activity
-            android:name=".Activity_historial_detallado"
+            android:name=".Usuario.Activity_historial_detallado"
             android:exported="false" />
         <activity
             android:name=".Usuario.Activity_ejercicios"
@@ -25,7 +25,7 @@
             android:name=".Usuario.Activity_agregar_entrenamiento"
             android:exported="false" />
         <activity
-            android:name=".Activity_rutina_empezada"
+            android:name=".Usuario.Activity_rutina_empezada"
             android:exported="false" />
         <activity
             android:name=".Usuario.Activity_modificar_medidas"
@@ -40,7 +40,7 @@
             android:name=".Usuario.Activity_registro"
             android:exported="false" />
         <activity
-            android:name=".Activity_navegacion"
+            android:name=".Usuario.Activity_navegacion"
             android:exported="false" />
         <activity
             android:name=".Usuario.Activity_login"

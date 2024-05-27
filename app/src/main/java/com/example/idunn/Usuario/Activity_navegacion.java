@@ -1,4 +1,4 @@
-package com.example.idunn;
+package com.example.idunn.Usuario;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.example.idunn.Fragments.Agregar;
 import com.example.idunn.Fragments.Historial;
 import com.example.idunn.Fragments.Perfil;
+import com.example.idunn.R;
 import com.example.idunn.databinding.ActivityNavegacionBinding;
 
 public class Activity_navegacion extends AppCompatActivity {

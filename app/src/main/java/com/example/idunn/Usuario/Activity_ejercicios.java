@@ -27,7 +27,7 @@ public class Activity_ejercicios extends AppCompatActivity {
 
     /* Variables usadas */
     private RecyclerView recyclerViewEjerciciosList, recyclerView;
-    private List<String> exercisesList = new ArrayList<>(); // Asegúrate de inicializar la lista aquí
+    private List<String> exercisesList = new ArrayList<>();
     private AdapterExercise adapter;
     private TextView tituloEjercicio, titleTextView;
     private LinearLayout linearLayout;
@@ -46,75 +46,56 @@ public class Activity_ejercicios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ejercicios);
 
-        linearLayout = findViewById(R.id.linearLayoutEjercicios);
+        try {
+            linearLayout = findViewById(R.id.linearLayoutEjercicios);
 
-        ref = FirebaseDatabase.getInstance().getReference("workout_exercises");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()) {
-                    String exerciseName = exerciseSnapshot.child("name").getValue(String.class);
-                    TextView titleTextView = new TextView(Activity_ejercicios.this);
-                    titleTextView.setText(exerciseName);
-                    titleTextView.setTextSize(20);
+            ref = FirebaseDatabase.getInstance().getReference("workout_exercises");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot exerciseSnapshot : dataSnapshot.getChildren()) {
+                        exerciseName = exerciseSnapshot.child("name").getValue(String.class);
+                        titleTextView = new TextView(Activity_ejercicios.this);
+                        titleTextView.setText(exerciseName);
+                        titleTextView.setTextSize(20);
 
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    titleTextView.setLayoutParams(layoutParams);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        titleTextView.setLayoutParams(layoutParams);
 
-                    linearLayout.addView(titleTextView);
+                        linearLayout.addView(titleTextView);
 
-                    List<String> exerciseList = new ArrayList<>();
-                    for (DataSnapshot exercise : exerciseSnapshot.child("exercises").getChildren()) {
-                        exerciseList.add(exercise.child("name").getValue(String.class));
-                    }
-
-                    RecyclerView recyclerView = new RecyclerView(Activity_ejercicios.this);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(Activity_ejercicios.this));
-                    AdapterExercise adapter = new AdapterExercise(exerciseList, new AdapterExercise.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            String selectedExerciseName = exerciseList.get(position);
-                            ArrayList<String> selectedExerciseNames = new ArrayList<>();
-                            selectedExerciseNames.add(selectedExerciseName);
-                            intent = new Intent();
-                            intent.putStringArrayListExtra("selected_ejercicios", selectedExerciseNames);
-                            setResult(RESULT_OK, intent);
-                            finish();
+                        //No se puede quitar
+                        List<String> exerciseList = new ArrayList<>();
+                        for (DataSnapshot exercise : exerciseSnapshot.child("exercises").getChildren()) {
+                            exerciseList.add(exercise.child("name").getValue(String.class));
                         }
-                    });
-                    recyclerView.setAdapter(adapter);
-                    linearLayout.addView(recyclerView);
+
+                        recyclerView = new RecyclerView(Activity_ejercicios.this);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(Activity_ejercicios.this));
+                        adapter = new AdapterExercise(exerciseList, new AdapterExercise.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                selectedExerciseName = exerciseList.get(position);
+                                selectedExerciseNames = new ArrayList<>();
+                                selectedExerciseNames.add(selectedExerciseName);
+                                intent = new Intent();
+                                intent.putStringArrayListExtra("selected_ejercicios", selectedExerciseNames);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                        });
+                        recyclerView.setAdapter(adapter);
+                        linearLayout.addView(recyclerView);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FirebaseError", "Error al leer datos de Firebase", databaseError.toException());
-            }
-        });
-    }
-
-
-
-
-    public void onItemClick(int position) {
-
-
-        // Obtenemos el ejercicio que hayamos pulsado
-        selectedExerciseName = exerciseList.get(position);
-
-        // Creamos la lista y agregamos dicho ejercicio
-        selectedExerciseNames = new ArrayList<>();
-        selectedExerciseNames.add(selectedExerciseName);
-
-        // Creamos un intent y ponemos un extra con dicha clave para referenciarlo después
-        intent = new Intent();
-        intent.putStringArrayListExtra("selected_ejercicios", selectedExerciseNames);
-
-        // Si pasa correctamete  lanzamos el intent con los datos
-        setResult(RESULT_OK, intent);
-
-        // Finalizamos activity
-        finish();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("FirebaseError", "Error al leer datos de Firebase", databaseError.toException());
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar obtener los datos");
+        }
     }
 }

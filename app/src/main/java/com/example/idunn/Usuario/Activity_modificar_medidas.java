@@ -42,28 +42,32 @@ public class Activity_modificar_medidas extends AppCompatActivity {
     }
 
     private void cargarMedidas() {
-        userId = mAuth.getCurrentUser().getUid();
-        measurementsRef = mDatabase.getReference("users").child(userId).child("measurements");
-        measurementsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                measurement = dataSnapshot.getValue(Measurement.class);
-                if (measurement != null) {
-                    weightEditText.setText(String.valueOf(measurement.getWeight()));
-                    heightEditText.setText(String.valueOf(measurement.getHeight()));
-                    armEditText.setText(String.valueOf(measurement.getArm_size()));
-                    legEditText.setText(String.valueOf(measurement.getLeg_size()));
-                    forearmEditText.setText(String.valueOf(measurement.getForearm_size()));
-                    chestEditText.setText(String.valueOf(measurement.getChest_size()));
-                    calfEditText.setText(String.valueOf(measurement.getCalf_size()));
-                    waistEditText.setText(String.valueOf(measurement.getWaist()));
+        try {
+            userId = mAuth.getCurrentUser().getUid();
+            measurementsRef = mDatabase.getReference("users").child(userId).child("measurements");
+            measurementsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    measurement = dataSnapshot.getValue(Measurement.class);
+                    if (measurement != null) {
+                        weightEditText.setText(String.valueOf(measurement.getWeight()));
+                        heightEditText.setText(String.valueOf(measurement.getHeight()));
+                        armEditText.setText(String.valueOf(measurement.getArm_size()));
+                        legEditText.setText(String.valueOf(measurement.getLeg_size()));
+                        forearmEditText.setText(String.valueOf(measurement.getForearm_size()));
+                        chestEditText.setText(String.valueOf(measurement.getChest_size()));
+                        calfEditText.setText(String.valueOf(measurement.getCalf_size()));
+                        waistEditText.setText(String.valueOf(measurement.getWaist()));
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar cargar los datos");
+        }
     }
 
     private void initViews(){
@@ -80,25 +84,29 @@ public class Activity_modificar_medidas extends AppCompatActivity {
         saveButton = findViewById(R.id.saveButton);
     }
     private void setListeners(){
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                weightText = Integer.parseInt(weightEditText.getText().toString());
-                heightText = Integer.parseInt(heightEditText.getText().toString());
-                armText = Integer.parseInt(armEditText.getText().toString());
-                legText = Integer.parseInt(legEditText.getText().toString());
-                forearmText = Integer.parseInt(forearmEditText.getText().toString());
-                chestText = Integer.parseInt(chestEditText.getText().toString());
-                calfText = Integer.parseInt(calfEditText.getText().toString());
-                waistText = Integer.parseInt(waistEditText.getText().toString());
-                measurement = new Measurement(armText, calfText, chestText, forearmText, heightText, weightText, legText, waistText);
-                userId = mAuth.getCurrentUser().getUid();
-                measurementsRef = mDatabase.getReference("users").child(userId).child("measurements");
+       try {
+           saveButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   weightText = Integer.parseInt(weightEditText.getText().toString());
+                   heightText = Integer.parseInt(heightEditText.getText().toString());
+                   armText = Integer.parseInt(armEditText.getText().toString());
+                   legText = Integer.parseInt(legEditText.getText().toString());
+                   forearmText = Integer.parseInt(forearmEditText.getText().toString());
+                   chestText = Integer.parseInt(chestEditText.getText().toString());
+                   calfText = Integer.parseInt(calfEditText.getText().toString());
+                   waistText = Integer.parseInt(waistEditText.getText().toString());
+                   measurement = new Measurement(armText, calfText, chestText, forearmText, heightText, weightText, legText, waistText);
+                   userId = mAuth.getCurrentUser().getUid();
+                   measurementsRef = mDatabase.getReference("users").child(userId).child("measurements");
 
-                measurementsRef.setValue(measurement);
+                   measurementsRef.setValue(measurement);
 
-                finish();
-            }
-        });
+                   finish();
+               }
+           });
+       }catch (Exception e){
+           System.err.println("Error al intentar settear los datos");
+       }
     }
 }

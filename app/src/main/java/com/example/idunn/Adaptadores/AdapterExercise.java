@@ -57,18 +57,23 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.Exerci
         }
 
         public void bind(final String exercise, final OnItemClickListener listener) {
-            textViewExercise.setText(exercise);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
+            try {
+                textViewExercise.setText(exercise);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION) {
+                                listener.onItemClick(position);
+                            }
                         }
                     }
-                }
-            });
+                });
+            }catch (Exception e){
+                System.err.println("Error al intentar hacer click en el item");
+                System.err.println("Error al intentar hacer click en el item");
+            }
         }
     }
 }

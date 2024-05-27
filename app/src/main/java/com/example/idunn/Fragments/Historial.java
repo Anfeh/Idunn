@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.idunn.Adaptadores.HistoryAdapter;
-import com.example.idunn.DatosEntrenamiento;
+import com.example.idunn.Datos.DatosEntrenamiento;
 import com.example.idunn.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,42 +57,53 @@ public class Historial extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        datosEntrenamientoArrayList = new ArrayList<>();
-        adaptador = new HistoryAdapter(getActivity(), datosEntrenamientoArrayList);
-        recyclerView.setAdapter(adaptador);
+        try {
+            recyclerView = view.findViewById(R.id.recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            datosEntrenamientoArrayList = new ArrayList<>();
+            adaptador = new HistoryAdapter(getActivity(), datosEntrenamientoArrayList);
+            recyclerView.setAdapter(adaptador);
 
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseDatabase.getInstance().getReference("users").child(uid).child("workouts_timeline")
-                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DataSnapshot snapshot : task.getResult().getChildren()) {
-                                String date = snapshot.child("date").getValue(String.class);
-                                String time = snapshot.child("time").getValue(String.class);
-                                String workoutName = snapshot.child("workout_name").getValue(String.class);
-                                List<String> exerciseNames = new ArrayList<>();
-                                List<String> seriesCount = new ArrayList<>();
+            fetchFromDatabase();
+        } catch (Exception e) {
+            System.err.println("Error al obtener datos");
+        }
 
-                                for (DataSnapshot exerciseSnapshot : snapshot.child("exercises").getChildren()) {
-                                    String exerciseName = exerciseSnapshot.child("name").getValue(String.class);
-                                    exerciseNames.add(exerciseName);
-                                    String totalSeries = String.valueOf(exerciseSnapshot.child("series").getChildrenCount());
-                                    seriesCount.add(totalSeries);
-                                }
-
-                                DatosEntrenamiento datos = new DatosEntrenamiento(date, time, workoutName, exerciseNames, seriesCount);
-                                datosEntrenamientoArrayList.add(datos);
-                            }
-                            adaptador.notifyDataSetChanged();
-                        }
-                    }
-                });
     }
 
+    private void fetchFromDatabase() {
+        try {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase.getInstance().getReference("users").child(uid).child("workouts_timeline")
+                    .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                                    date = snapshot.child("date").getValue(String.class);
+                                    time = snapshot.child("time").getValue(String.class);
+                                    workoutName = snapshot.child("workout_name").getValue(String.class);
+                                    exerciseNames = new ArrayList<>();
+                                    seriesCount = new ArrayList<>();
 
+                                    for (DataSnapshot exerciseSnapshot : snapshot.child("exercises").getChildren()) {
+                                        exerciseName = exerciseSnapshot.child("name").getValue(String.class);
+                                        exerciseNames.add(exerciseName);
+                                        totalSeries = String.valueOf(exerciseSnapshot.child("series").getChildrenCount());
+                                        seriesCount.add(totalSeries);
+                                    }
+
+                                    datos = new DatosEntrenamiento(date, time, workoutName, exerciseNames, seriesCount);
+                                    datosEntrenamientoArrayList.add(datos);
+                                }
+                                adaptador.notifyDataSetChanged();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            System.err.println("Error al obtener los datos");
+        }
+    }
 
 
 }

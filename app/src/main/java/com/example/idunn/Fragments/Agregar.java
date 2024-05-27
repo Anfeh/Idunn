@@ -14,13 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.idunn.Adaptadores.Adaptador;
 import com.example.idunn.Datos.Exercises;
 import com.example.idunn.Datos.Series;
 import com.example.idunn.Datos.User;
 import com.example.idunn.Datos.Workout;
-import com.example.idunn.DatosEntrenamiento;
+import com.example.idunn.Datos.DatosEntrenamiento;
 import com.example.idunn.Logica.CurrentUser;
 import com.example.idunn.R;
 import com.example.idunn.Usuario.Activity_agregar_entrenamiento;
@@ -37,16 +38,14 @@ public class Agregar extends Fragment {
     private ArrayList<DatosEntrenamiento> datosEntrenamientoArrayList;
 
     private RecyclerView recyclerView;
-    private ImageView logo;
     private String uid;
-    private View view;
     private List<Workout> workouts;
     private List<String> exerciseNames, numSeries;
     private List<Exercises> exercises;
     private List<Series> series;
     private Adaptador adaptador;
     private Button agregarEntenamiento;
-    Intent intent;
+
     public Agregar() {
 
     }
@@ -69,57 +68,70 @@ public class Agregar extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        datosEntrenamientoArrayList = new ArrayList<>();
-        mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        agregarEntenamiento = view.findViewById(R.id.agregarEntrenamientoButton);
-        agregarEntenamiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Activity_agregar_entrenamiento.class);
-                startActivity(intent);
-            }
-        });
-        fetchDataFromDatabase(view, uid);
+
+        try {
+            datosEntrenamientoArrayList = new ArrayList<>();
+            mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            agregarEntenamiento = view.findViewById(R.id.agregarEntrenamientoButton);
+            agregarEntenamiento.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (datosEntrenamientoArrayList.size() >= 3) {
+                        Toast.makeText(getActivity(), "No se pueden agregar más de 3 entrenamientos", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent(getActivity(), Activity_agregar_entrenamiento.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+            fetchFromDatabase(view, uid);
+        }catch (Exception e){
+            System.err.println("Error al intentar obtener los datos");
+        }
 
     }
-        private void fetchDataFromDatabase(View view, String uid) {
-        mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
-
-            @Override
-            public void onCallback(User user) {
-                if (user != null) {
-                    workouts = user.getWorkouts();
-                    if (workouts != null) {
-                        for (Workout workout : workouts) {
-                            exerciseNames = new ArrayList<>();
-                            exercises = workout.getExercises();
-                            numSeries=null;
-                            if (exercises != null) {
-                                for (Exercises exercise : exercises) {
-                                    numSeries = new ArrayList<>();
-                                    exerciseNames.add(exercise.getName());
-                                    series = exercise.getSeries();
-                                    if (series != null) {
-                                        for (Series serie : series) {
-                                            numSeries.add(String.valueOf(serie.getSerie()));
+        private void fetchFromDatabase(View view, String uid) {
+        try {
+            mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
+                @Override
+                public void onCallback(User user) {
+                    if (user != null) {
+                        datosEntrenamientoArrayList.clear();
+                        workouts = user.getWorkouts();
+                        if (workouts != null) {
+                            for (Workout workout : workouts) {
+                                exerciseNames = new ArrayList<>();
+                                exercises = workout.getExercises();
+                                numSeries=null;
+                                if (exercises != null) {
+                                    for (Exercises exercise : exercises) {
+                                        numSeries = new ArrayList<>();
+                                        exerciseNames.add(exercise.getName());
+                                        series = exercise.getSeries();
+                                        if (series != null) {
+                                            for (Series serie : series) {
+                                                numSeries.add(String.valueOf(serie.getSerie()));
+                                            }
                                         }
                                     }
+                                    datosEntrenamientoArrayList.add(new DatosEntrenamiento(workout.getName(), exerciseNames, numSeries));
                                 }
-                                datosEntrenamientoArrayList.add(new DatosEntrenamiento(workout.getName(), exerciseNames, numSeries));
                             }
                         }
-                    }
-                    recyclerView = view.findViewById(R.id.recyclerView);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerView.setHasFixedSize(true);
-                    adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList, uid);
+                        recyclerView = view.findViewById(R.id.recyclerView);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        recyclerView.setHasFixedSize(true);
+                        adaptador = new Adaptador(getActivity(), datosEntrenamientoArrayList, uid);
 
-                    recyclerView.setAdapter(adaptador);
-                    adaptador.notifyDataSetChanged();
+                        recyclerView.setAdapter(adaptador);
+                        adaptador.notifyDataSetChanged();
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar obtener los datos");
+        }
     }
 
 

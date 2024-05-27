@@ -13,13 +13,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.idunn.DatosEntrenamiento;
+import com.example.idunn.Datos.DatosEntrenamiento;
 import com.example.idunn.R;
 import com.example.idunn.Usuario.Activity_detailed_train;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,9 +31,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     private Context context;
     private ArrayList<DatosEntrenamiento> datosEntrenamientos;
     private String userId;
-    private DatosEntrenamiento datosEntrenamiento;
     private FirebaseDatabase database;
-    private DatabaseReference userRef;
+    private Intent intent;
+    private TextView additionalTextView;
+    private DatabaseReference userRef, workoutsRef, antiguaReferencia, nuevaReferencia;
 
     public Adaptador(Context context, ArrayList<DatosEntrenamiento> datosEntrenamientos, String userId) {
         this.context = context;
@@ -47,13 +51,16 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DatosEntrenamiento datosEntrenamiento = datosEntrenamientos.get(position);
-        holder.tituloEjercicio.setText(datosEntrenamiento.getNombreRutina());
+        DatosEntrenamiento datos = datosEntrenamientos.get(position);
+
+
+
+        holder.tituloEjercicio.setText(datos.getNombreRutina());
         holder.additionalTextContainer.removeAllViews();
 
-        for (String additionalText : datosEntrenamiento.getNombreEntrenamiento()) {
-            TextView additionalTextView = new TextView(context);
-            additionalTextView.setText(additionalText + " x " + datosEntrenamiento.getSeries().size() + " series");
+        for (String additionalText : datos.getNombreEntrenamiento()) {
+            additionalTextView = new TextView(context);
+            additionalTextView.setText(additionalText + " x " + datos.getSeries().size() + " series");
             additionalTextView.setTextSize(13);
             additionalTextView.setTextColor(Color.BLACK);
             additionalTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -61,22 +68,26 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
 
             holder.additionalTextContainer.addView(additionalTextView);
         }
-        holder.eliminarEntrenamiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eliminarEntrenamiento(position);
-            }
-        });
+        try {
+            holder.eliminarEntrenamiento.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    eliminarEntrenamiento(position);
+                }
+            });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Activity_detailed_train.class);
-                intent.putExtra("clicked_item", datosEntrenamiento);
-                intent.putExtra("series", datosEntrenamiento.getSeries().toArray(new String[0]));
-                context.startActivity(intent);
-            }
-        });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(context, Activity_detailed_train.class);
+                    intent.putExtra("clicked_item", datos);
+                    intent.putExtra("series", datos.getSeries().toArray(new String[0]));
+                    context.startActivity(intent);
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar hacer click en un item");
+        }
     }
 
     @Override
@@ -98,21 +109,62 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     }
 
     private void eliminarEntrenamiento(int position) {
-        database = FirebaseDatabase.getInstance();
-        userRef = database.getReference("users").child(userId).child("workouts").child(String.valueOf(position));
+        try {
+            database = FirebaseDatabase.getInstance();
+            userRef = database.getReference("users").child(userId).child("workouts").child(String.valueOf(position));
 
-        userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                datosEntrenamientos.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, datosEntrenamientos.size());
+            userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    datosEntrenamientos.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, datosEntrenamientos.size());
+                    cambiarPosicion(position);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, "Error al eliminar el entrenamiento", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al acceder a la bbdd");
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    private void cambiarPosicion(int posicionInicial) {
+        try {
+            workoutsRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("workouts");
+            for (int i = posicionInicial; i < datosEntrenamientos.size(); i++) {
+                antiguaReferencia = workoutsRef.child(String.valueOf(i + 1));
+                nuevaReferencia = workoutsRef.child(String.valueOf(i));
+                antiguaReferencia.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        nuevaReferencia.setValue(snapshot.getValue(), new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError != null) {
+                                    Toast.makeText(context, "Error al cambiar el índice de los entrenamientos", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        antiguaReferencia.removeValue();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(context, "Error al acceder a los datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Error al eliminar el entrenamiento", Toast.LENGTH_SHORT).show();
-            }
-        });
+        } catch (Exception e) {
+            System.err.println("Error a la hora de acceder a la bbdd");
+            e.printStackTrace();
+        }
     }
 }

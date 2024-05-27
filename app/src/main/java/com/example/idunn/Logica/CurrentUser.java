@@ -16,32 +16,34 @@ import java.util.List;
 
 public class CurrentUser {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase, userRef;
     private User user;
-    private List<Workout_exercises> workoutExercises;
-    private Workout_exercises workoutExercise;
 
     public CurrentUser(DatabaseReference database) {
         mDatabase = database;
     }
 
     public User getCurrentUser(String uid, final GetUserCallback callback) {
-        DatabaseReference userRef = mDatabase.child("users").child(uid);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    user.setId(uid);
+        try {
+            userRef = mDatabase.child("users").child(uid);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    user = dataSnapshot.getValue(User.class);
+                    if (user != null) {
+                        user.setId(uid);
+                    }
+                    callback.onCallback(user);
                 }
-                callback.onCallback(user);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                callback.onCallback(null);
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    callback.onCallback(null);
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar obtener el id");
+        }
 
         return null;
     }
@@ -50,15 +52,4 @@ public class CurrentUser {
         void onCallback(User user);
     }
 
-    public List<Workout_exercises> getWorkoutExercisesData(User user) {
-        workoutExercises = new ArrayList<>();
-        for (Workout workout : user.getWorkouts()) {
-            workoutExercise = new Workout_exercises(workout.getName(), new ArrayList<>());
-            for (Exercises exercises : workout.getExercises()) {
-                workoutExercise.getExercises().add(new Exercises(exercises.getName(), new ArrayList<>()));
-            }
-            workoutExercises.add(workoutExercise);
-        }
-        return workoutExercises;
-    }
 }

@@ -33,10 +33,15 @@ public class SeriesHistoryAdapter extends RecyclerView.Adapter<SeriesHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull SeriesViewHolder holder, int position) {
-        serie = seriesList.get(position);
-        holder.numero.setText(String.valueOf(serie.getSerie()));
-        holder.inputRepeticiones.setText(String.valueOf(serie.getRepetitions()));
-        holder.inputPesos.setText(String.valueOf(serie.getWeight()));
+
+        try {
+            serie = seriesList.get(position);
+            holder.numero.setText(String.valueOf(serie.getSerie()));
+            holder.inputRepeticiones.setText(String.valueOf(serie.getRepetitions()));
+            holder.inputPesos.setText(String.valueOf(serie.getWeight()));
+        }catch (Exception e){
+            System.err.println("Error al settear textos");
+        }
     }
 
     @Override

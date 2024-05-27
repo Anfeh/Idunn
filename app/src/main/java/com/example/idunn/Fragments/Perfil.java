@@ -51,76 +51,84 @@ public class Perfil extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        medidasButton = view.findViewById(R.id.medidasButton);
-        nameTextView = view.findViewById(R.id.nameTextView);
-        emailTextView = view.findViewById(R.id.emailTextView);
-        logOutTextView = view.findViewById(R.id.logOutTextView);
+        try {
+            medidasButton = view.findViewById(R.id.medidasButton);
+            nameTextView = view.findViewById(R.id.nameTextView);
+            emailTextView = view.findViewById(R.id.emailTextView);
+            logOutTextView = view.findViewById(R.id.logOutTextView);
 
 
-        mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
-            @Override
-            public void onCallback(User user) {
-                if (user != null) {
-                    nameTextView.setText(user.getUsername());
-                    emailTextView.setText(user.getEmail());
+            mCurrentUser = new CurrentUser(FirebaseDatabase.getInstance().getReference());
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            mCurrentUser.getCurrentUser(uid, new CurrentUser.GetUserCallback() {
+                @Override
+                public void onCallback(User user) {
+                    if (user != null) {
+                        nameTextView.setText(user.getUsername());
+                        emailTextView.setText(user.getEmail());
+                    }
                 }
-            }
-        });
-        medidasButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intent = new Intent(getActivity(), Activity_modificar_medidas.class);
-                startActivity(intent);
-            }
-        });
-        logOutTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+            });
+            medidasButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intent = new Intent(getActivity(), Activity_modificar_medidas.class);
+                    startActivity(intent);
+                }
+            });
+            logOutTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
 
-                intent = new Intent(getActivity(), Activity_login.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-        textViewSobreMi = view.findViewById(R.id.textViewSobreMi);
+                    intent = new Intent(getActivity(), Activity_login.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
+            textViewSobreMi = view.findViewById(R.id.textViewSobreMi);
 
-        textViewSobreMi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopup();
-            }
-        });
+            textViewSobreMi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPopup();
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar cambiar de activity");
+        }
 
         return view;
     }
 
     private void showPopup() {
-        inflater = LayoutInflater.from(getContext());
-        popupView = inflater.inflate(R.layout.popup_sobremi, null);
+        try {
+            inflater = LayoutInflater.from(getContext());
+            popupView = inflater.inflate(R.layout.popup_sobremi, null);
 
-        width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        focusable = true;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+            width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            focusable = true;
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-        animEnter = AnimationUtils.loadAnimation(getContext(), R.anim.popup_aparecer);
-        popupView.startAnimation(animEnter);
+            animEnter = AnimationUtils.loadAnimation(getContext(), R.anim.popup_aparecer);
+            popupView.startAnimation(animEnter);
 
-        popupWindow.showAtLocation(textViewSobreMi, Gravity.CENTER, 0, 0);
+            popupWindow.showAtLocation(textViewSobreMi, Gravity.CENTER, 0, 0);
 
-        closeTextView = popupView.findViewById(R.id.closeTextView);
-        closeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Animation animExit = AnimationUtils.loadAnimation(getContext(), R.anim.popup_desaparecer);
-                popupView.startAnimation(animExit);
-                popupWindow.dismiss();
-            }
-        });
+            closeTextView = popupView.findViewById(R.id.closeTextView);
+            closeTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Animation animExit = AnimationUtils.loadAnimation(getContext(), R.anim.popup_desaparecer);
+                    popupView.startAnimation(animExit);
+                    popupWindow.dismiss();
+                }
+            });
+        }catch (Exception e){
+            System.err.println("Error al intentar cargar el popup");
+        }
     }
 
 }

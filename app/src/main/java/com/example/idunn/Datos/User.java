@@ -26,7 +26,6 @@ public class User {
         this.measurements = new Measurement(0,0,0,0,0,0,0,0);
         this.workouts = new ArrayList<>();
         this.workouts.add(new Workout("Jalon", "2024-2-1", Arrays.asList(new Exercises("Jalon", Arrays.asList(new Series(1,2,25))))));
-        this.workouts.add(new Workout("Pecho", "2024-2-2", Arrays.asList(new Exercises("Jalon de Pecho", Arrays.asList(new Series(1,2,25), new Series(2,3,25))),new Exercises("Aperturas", Arrays.asList(new Series(1,2,25), new Series(2,3,25))))));
         this.workouts_timeline = new ArrayList<>();
     }
 

@@ -46,7 +46,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
 
     @Override
     public void onBindViewHolder(@NonNull SeriesViewHolder holder, int position) {
-        Series series = seriesList.get(position);
+        series = seriesList.get(position);
         holder.bind(series);
     }
 
@@ -55,27 +55,26 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         return seriesList.size();
     }
     public List<Series> getEnteredData() {
-        enteredData = new ArrayList<>();
-        for (int i = 0; i < seriesList.size(); i++) {
-            series = seriesList.get(i);
-            holder = (SeriesViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-            if (holder!= null) {
-                series.setSerie(Integer.parseInt(holder.serieTextView.getText().toString()));
-                series.setRepetitions(Integer.parseInt(holder.repetitionsEditText.getText().toString()));
-                series.setWeight(Integer.parseInt(holder.weightEditText.getText().toString()));
-                enteredData.add(series);
+        try {
+            enteredData = new ArrayList<>();
+            for (int i = 0; i < seriesList.size(); i++) {
+                series = seriesList.get(i);
+                holder = (SeriesViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                if (holder!= null) {
+                    series.setSerie(Integer.parseInt(holder.serieTextView.getText().toString()));
+                    series.setRepetitions(Integer.parseInt(holder.repetitionsEditText.getText().toString()));
+                    series.setWeight(Integer.parseInt(holder.weightEditText.getText().toString()));
+                    enteredData.add(series);
+                }
             }
+            return enteredData;
+        }catch (Exception e){
+            System.err.println("Error al devolver datos");
+        }finally {
+            return enteredData;
         }
-        return enteredData;
     }
-    public boolean areAllFieldsFilled() {
-        for (Series series : seriesList) {
-            if (series.getRepetitions() == 0 || series.getWeight() == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     public void addSeries(Series series) {
         seriesList.add(series);

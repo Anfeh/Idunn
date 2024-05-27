@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.idunn.DatosEntrenamiento;
+import com.example.idunn.Datos.DatosEntrenamiento;
 import com.example.idunn.R;
-import com.example.idunn.Activity_historial_detallado;
+import com.example.idunn.Usuario.Activity_historial_detallado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,34 +41,38 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DatosEntrenamiento datos = datosEntrenamientoArrayList.get(position);
-        holder.textFecha.setText(datos.getFecha());
-        holder.tituloTarjeta.setText(datos.getNombreRutina());
+        try {
+            DatosEntrenamiento datos = datosEntrenamientoArrayList.get(position);
+            holder.textFecha.setText(datos.getFecha());
+            holder.tituloTarjeta.setText(datos.getNombreRutina());
 
-        holder.additionalTextContainer.removeAllViews();
+            holder.additionalTextContainer.removeAllViews();
 
-        exerciseNames = datos.getNombreEntrenamiento();
-        seriesCounts = datos.getSeries();
+            exerciseNames = datos.getNombreEntrenamiento();
+            seriesCounts = datos.getSeries();
 
-        for (int i = 0; i < exerciseNames.size(); i++) {
-            String exerciseName = exerciseNames.get(i);
-            String totalSeries = seriesCounts.get(i);
+            for (int i = 0; i < exerciseNames.size(); i++) {
+                String exerciseName = exerciseNames.get(i);
+                String totalSeries = seriesCounts.get(i);
 
-            additionalTextView = new TextView(context);
-            additionalTextView.setText(exerciseName + " x " + totalSeries + " series");
-            additionalTextView.setTextSize(13);
-            additionalTextView.setTextColor(Color.BLACK);
-            additionalTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            additionalTextView.setPadding(55, 10, 0, 0);
+                additionalTextView = new TextView(context);
+                additionalTextView.setText(exerciseName + " x " + totalSeries + " series");
+                additionalTextView.setTextSize(13);
+                additionalTextView.setTextColor(Color.BLACK);
+                additionalTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                additionalTextView.setPadding(55, 10, 0, 0);
 
-            holder.additionalTextContainer.addView(additionalTextView);
+                holder.additionalTextContainer.addView(additionalTextView);
+            }
+
+            holder.itemView.setOnClickListener(v -> {
+                intent = new Intent(context, Activity_historial_detallado.class);
+                intent.putExtra("clicked_item", datos);
+                context.startActivity(intent);
+            });
+        }catch (Exception e ){
+            System.err.println("Error al intentar crear un nuevo elemento/pasar elementos");
         }
-
-        holder.itemView.setOnClickListener(v -> {
-            intent = new Intent(context, Activity_historial_detallado.class);
-            intent.putExtra("clicked_item", datos);
-            context.startActivity(intent);
-        });
     }
 
     @Override
